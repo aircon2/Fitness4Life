@@ -15,14 +15,16 @@ public class Day {
     // EFFECTS: add a day to workout plan
     public void addExercise(Exercise e) {
     }
-    
-    // EFFECTS: addExercise to list of exercises per day
-    public void setExercise(Exercise e, int index) {
-    }
 
     // EFFECTS: return the exercise picked 
     public Exercise getExercise(String Name) {
         return null;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: clears all exercises from day d
+    public void cheatDay() {
+
     }
 
     // EFFECTS: return the exercises needed to be completed per day

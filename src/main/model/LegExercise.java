@@ -12,48 +12,57 @@ public class LegExercise implements Exercise {
        //TODO
     }
 
+    @Override
     // REQUIRES: string length > 0 
     // MODIFIES: this
     // EFFECTS: Set a name for given leg exercise 
-    public void setName() {
+    public void setName(String name) {
         
     }
 
+    @Override
     // REQUIRES: time >= 0
     // MODIFIES: this
     // EFFECTS: Set a time for given leg exercise 
-    public void setTime() {
+    public void setTime(int time) {
         
     }
 
+    @Override
     // REQUIRES: caloriesBurned >= 0
     // MODIFIES: this
     // EFFECTS: Set the calories burned for given leg exercise 
-    public void setCaloriesBurned() {
+    public void setCaloriesBurned(int calories) {
         
     }
+
+    @Override
     // REQUIRES: reps >= 0
     // MODIFIES: this
     // EFFECTS: Set the number of reps for given leg exercise 
-    public void setReps() {
+    public void setReps(int reps) {
         
     }
 
-     // EFFECTS: returns name for leg exercise 
-     public String getName() {
+    @Override
+    // EFFECTS: returns name for leg exercise 
+    public String getName() {
         return "";
     }
 
+    @Override
     // EFFECTS: returns time for leg exercise 
     public int getTimeForExercise() {
         return -1;
     }
 
+    @Override
     // EFFECTS: returns time for leg exercise 
     public int getCaloriesBurned() {
         return -1;
     }
 
+    @Override
     // EFFECTS: returns reps for leg exercise 
     public int getReps() {
         return -1;

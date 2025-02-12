@@ -6,9 +6,9 @@ import java.util.ArrayList;
 public class Person {
     private String name;
     private int targetCalories;
-    private ArrayList<String> schedule;
+    private WeeklySchedule schedule;
 
-    // create a new person with a name and target calories
+    // create a new person with a name and target calories and empty weekly schedule
     public Person(String name, int targetCalories) {
         //TODO Auto-generated constructor stub
     }
@@ -17,14 +17,21 @@ public class Person {
     // REQUIRES: string length >= 0 
     // MODIFIES: this
     // EFFECTS: Set a name for given person
-    public void setName() {
+    public void setName(String name) {
         
     }
 
-    // REQUIRES: targetCalories >= 0
+    // REQUIRES: calories >= 0
     // MODIFIES: this
     // EFFECTS: Set the calories target for the person
-    public void setCaloriesBurned() {
+    public void setCalories(int calories) {
+        
+    }
+
+    // REQUIRES: calories >= 0
+    // MODIFIES: this
+    // EFFECTS: Add to the calories target for the person
+    public void addCalories(int calories) {
         
     }
 

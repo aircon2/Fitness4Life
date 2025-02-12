@@ -6,30 +6,29 @@ import java.util.ArrayList;
 public class WeeklySchedule {
     private ArrayList<Day> schedule;
 
-    // creates a list of exercises for each day of the week
+    // creates a list of no days 
     public void WeeklySchedule() {
     }
 
     // MODIFIES: this
-    //EFFECTS: return the day with (weekday) index position
+    //EFFECTS: add a day to the list of days 
     public void addDay(Day d) {
       
     }
 
     // MODIFIES: this
-    //EFFECTS: return the day with (weekday) index position
+    //EFFECTS: remove the day with given index position 
     public void removeDay(Day d) {
       
     }
 
-    // MODIFIES: this
-    //EFFECTS: return the day with (weekday) index position
-    public void cheatDay(Day d) {
-      
+    //EFFECTS: return the day with (weekday) index position, if none are added, return null
+    public Day getDay(int weekday) {
+        return null;
     }
 
-    //EFFECTS: return the day with (weekday) index position
-    public Day getDay(int weekday) {
+    //EFFECTS: return the current schedule of exercises
+    public WeeklySchedule getSchedule() {
         return null;
     }
 
