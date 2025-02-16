@@ -1,10 +1,12 @@
 package ui;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import model.ArmExercise;
 import model.Day;
+import model.Exercise;
 import model.LegExercise;
 import model.Person;
 import model.WeeklySchedule;
@@ -72,7 +74,7 @@ public class ScheduleApp {
         } else if (command.equals("d")) {
             setType();
         } else if (command.equals("c")) {
-            sched.printSched(currentCalories, p.getTargetCalories(), p.getTime());
+            printSched(currentCalories, p.getTargetCalories(), p.getTime());
         } else if (command.equals("e")) {
            addExercise();
         } else if (command.equals("r")) {
@@ -116,9 +118,10 @@ public class ScheduleApp {
 
      //MODIFIES: this
     // EFFECTS: add an exercise to a day in the list
+    @SuppressWarnings("methodlength")
     private void addExercise() {
         System.out.println("Here are your current type days set, add exercises accordingly to only these days.");
-        sched.printTypeDay();
+        printTypeDay();
         System.out.println("Which day of the week do you want to set it for?");
         String day = input.next();
         day = day.toLowerCase();
@@ -163,6 +166,7 @@ public class ScheduleApp {
 
     //MODIFIES: Day
     // EFFECTS: remove an exercise from the list and update the current calories and time
+    @SuppressWarnings("methodlength")
     private void remove() {
         System.out.println("Do you want to remove one or clear exercises for a day?");
         System.out.println("c -> clear");
@@ -172,7 +176,7 @@ public class ScheduleApp {
 
         if (c.equals("c")) {
             System.out.println("Which day do you want to clear this exercise for?");
-            sched.printTypeDay();
+            printTypeDay();
             String day = input.next();
 
             ArrayList<Integer> temp = sched.clearExercise(day);
@@ -183,7 +187,7 @@ public class ScheduleApp {
             
         } else if (c.equals("r")) {
             System.out.println("Which day do you want to remove this exercise for?");
-            sched.printTypeDay();
+            printTypeDay();
             String day = input.next();
             input.nextLine();
             System.out.println("Whats the name of the exercise? (case sensitive)");
@@ -197,8 +201,52 @@ public class ScheduleApp {
         } else {
             System.out.println("Not a valid entry");
         }
-
-        
     }
+
+    public void printTypeDay() {
+        ArrayList<String> temp = sched.TypeDay();
+        for (String s : temp) {
+            System.out.println(s);
+        }
+    }
+
+    //EFFECTS: prints out the schedule
+    @SuppressWarnings("methodlength")
+    public void printSched(int currentCalories, int targetCalories, int timeLeft) {
+    System.out.printf("Target Calories: %10d   |   Current Calories: %10d  |   Time Remaining: %10d\n\n\n", targetCalories, currentCalories, timeLeft);
+    System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s |\n",
+                      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+    System.out.println("--------------------------------------------------------------------------------------");
+    System.out.print("|");
+    ArrayList<String> types = sched.Type();
+
+    for (String s : types) {
+        System.out.printf(" %-10s |", s);
+    }
+
+
+    System.out.println(); 
+    System.out.println("--------------------------------------------------------------------------------------");
+    
+    int maxExercises = sched.maxExercises();
+ArrayList<ArrayList<Exercise>> exercises = sched.allExercises();
+
+for (int i = 0; i < maxExercises; i++) {
+    System.out.print("|");
+    
+    for (int k = 0; k < exercises.size(); k++) { // Loop through days
+        if (i < exercises.get(k).size()) { // Ensure index is within bounds
+            System.out.printf(" %-10s |", exercises.get(k).get(i).getName());
+        } else {
+            System.out.printf(" %-10s |", ""); // Print empty if no exercise
+        }
+    }
+    
+    System.out.println(); // Move to the next row
+}
+
+    System.out.println("--------------------------------------------------------------------------------------");
+}
+
 
 }

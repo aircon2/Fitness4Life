@@ -120,9 +120,12 @@ public class WeeklyScheduleTest {
    
     @Test
     void testPrintTypeDay() {
+        ArrayList<String> temp = new ArrayList<>();
         weeklySchedule.setType("monday", "leg");
         weeklySchedule.setType("tuesday", "arm");
-        weeklySchedule.printTypeDay(); 
+        temp.add("monday - leg");
+        temp.add("tuesday - arm");
+        assertEquals(temp, weeklySchedule.TypeDay()); 
     }
 
     
@@ -130,5 +133,57 @@ public class WeeklyScheduleTest {
     void testGetSchedule() {
         assertEquals(7, weeklySchedule.getSchedule().size());
     }
+
+    @Test
+    void testType() {
+        weeklySchedule.setType("monday", "leg");
+        weeklySchedule.setType("wednesday", "arm");
+
+        ArrayList<String> expected = new ArrayList<>();
+        expected.add("leg");   
+        expected.add("");     
+        expected.add("arm");   
+        expected.add("");     
+        expected.add("");      
+        expected.add("");      
+        expected.add("");     
+
+        assertEquals(expected, weeklySchedule.Type());
+    }
+
+    @Test
+    void testMaxExercises() {
+        weeklySchedule.getDay("monday").addExercise(new LegExercise("Squat", 10, 50, 5));
+        weeklySchedule.getDay("tuesday").addExercise(new ArmExercise("Push-ups", 5, 30, 3));
+        weeklySchedule.getDay("tuesday").addExercise(new ArmExercise("Burpees", 8, 40, 4));
+
+        assertEquals(2, weeklySchedule.maxExercises()); 
+    }
+
+    @Test
+    void testAllExercises() {
+        Exercise squat = new LegExercise("Squat", 10, 50, 5);
+        Exercise pushUps = new ArmExercise("Push-ups", 5, 30, 3);
+        Exercise burpees = new ArmExercise("Burpees", 8, 40, 4);
+
+        weeklySchedule.getDay("monday").addExercise(squat);
+        weeklySchedule.getDay("tuesday").addExercise(pushUps);
+        weeklySchedule.getDay("tuesday").addExercise(burpees);
+
+        ArrayList<ArrayList<Exercise>> allExercises = weeklySchedule.allExercises();
+
+        assertEquals(1, allExercises.get(0).size()); 
+        assertEquals(squat, allExercises.get(0).get(0)); 
+
+        assertEquals(2, allExercises.get(1).size()); 
+        assertEquals(pushUps, allExercises.get(1).get(0));
+        assertEquals(burpees, allExercises.get(1).get(1)); 
+
+        assertEquals(0, allExercises.get(2).size()); 
+    }
+
+
+
+
 }
 

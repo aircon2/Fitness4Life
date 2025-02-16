@@ -38,43 +38,6 @@ public class WeeklySchedule {
         return null;
     }
 
-    //EFFECTS: prints out the schedule
-    public void printSched(int currentCalories, int targetCalories, int timeLeft) {
-    System.out.printf("Target Calories: %10d   |   Current Calories: %10d  |   Time Remaining: %10d\n\n\n", targetCalories, currentCalories, timeLeft);
-    System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s |\n",
-                      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
-
-    System.out.println("--------------------------------------------------------------------------------------");
-    System.out.print("|");
-    for (Day day : schedule) {
-        String type = day.getType();  
-        System.out.printf(" %-10s |", type);
-    }
-    System.out.println(); 
-
-    System.out.println("--------------------------------------------------------------------------------------");
-
-    int maxExercises = 0;
-    for (Day day : schedule) {
-        if (day.getExercisesForTheDay().size() > maxExercises) {
-            maxExercises = day.getExercisesForTheDay().size();
-        }
-    }
-    for (int i = 0; i < maxExercises; i++) {
-        System.out.print("|"); 
-        for (Day day : schedule) {
-            List<Exercise> exercises = day.getExercisesForTheDay();
-            if (i < exercises.size()) {
-                System.out.printf(" %-10s |", exercises.get(i).getName());
-            } else {
-                System.out.printf(" %-10s |", "");  
-            }
-        }
-        System.out.println();  
-    }
-    System.out.println("--------------------------------------------------------------------------------------");
-}
-
 
     //EFFECTS: return the current schedule of exercises
     public ArrayList<Day> getSchedule() {
@@ -89,15 +52,10 @@ public class WeeklySchedule {
             if (d.getName().equals(day)) { 
                if (type.equals("leg") || type.equals("arm")) {
                     d.setType(type);
-                    System.out.println("The type of day has been set!");
-                    valid = true;
                     break;
                } 
             
             } 
-        }
-        if (!valid) {
-            System.out.println("Not a valid answer");
         }
     }
 
@@ -108,18 +66,54 @@ public class WeeklySchedule {
                 return d;
              }
         }
-        System.out.println("Not a valid day");
         return null;
     }
 
-    //EFFECTS: prints out the days with types set 
-    public void printTypeDay() {
+    //EFFECTS: returns the days with types set 
+    public ArrayList<String> TypeDay() {
+        ArrayList<String> returns = new ArrayList<>();
         for (Day d : schedule) {
             if (d.getType() != "") {
-            System.out.println(d.getName() + " - " + d.getType());
+                returns.add(d.getName() + " - " + d.getType());
             }
         }
+        return returns;
     }
+
+     //EFFECTS: returns list of types for each day
+     public ArrayList<String> Type() {
+        ArrayList<String> returns = new ArrayList<>();
+        for (Day d : schedule) {
+            if (d.getType() != "") {
+                returns.add( d.getType());
+            } else {
+                returns.add("");
+            }
+        }
+        return returns;
+    }
+
+
+    //EFFECTS: the max number of exercises in all 
+    public int maxExercises() {
+       int maxExercises = 0;
+        for (Day day : schedule) {
+            if (day.getExercisesForTheDay().size() > maxExercises) {
+                maxExercises = day.getExercisesForTheDay().size();
+            }
+        }
+        return maxExercises;
+    }
+
+    //EFFECTS: returns the list of list of exercises for each day 
+    public ArrayList<ArrayList<Exercise>> allExercises() {
+        ArrayList<ArrayList<Exercise>> returns = new ArrayList<>();
+        for (Day day : schedule) {
+            returns.add(day.getExercisesForTheDay());
+        }
+         return returns;
+     }
+    
 
     //MODIFIES: this
     //EFFECTS: remove the exercise for given day, returns array list of the amount calories that exercise was worth and returns time it took
@@ -132,14 +126,12 @@ public class WeeklySchedule {
                     int cals = exercises.get(i).getCaloriesBurned() *  exercises.get(i).getReps();
                     int time = exercises.get(i).getTimeForExercise() *  exercises.get(i).getReps();
                     exercises.remove(i);
-                    System.out.println("exercise has been removed");
                     returns.add(cals);
                     returns.add(time);
                     return returns;
                 }
             }
         } 
-        System.out.println("no exercises to be cleared");
         returns.add(0);
         return returns;
     }
@@ -158,13 +150,11 @@ public class WeeklySchedule {
                     timeWorth += exercises.get(i).getTimeForExercise() *  exercises.get(i).getReps();
                 }
                 d.cheatDay();
-                System.out.println("Exercises have been cleared!");
                 returns.add(caloriesWorth);
                 returns.add(timeWorth);
                 return returns;
             }
         } 
-        System.out.println("no exercises to be cleared");
         returns.add(0);
         return returns;
     }
