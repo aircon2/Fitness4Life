@@ -83,6 +83,7 @@ public class ScheduleApp {
      
     }
 
+    //MODIFIES: person
     // EFFECTS: set the caloric target
     private void setCal() {
         System.out.println("Please type in the number you want to reach:");
@@ -91,6 +92,7 @@ public class ScheduleApp {
         System.out.println("Congrats, I wish you luck on reaching this caloric goal!");
     }
 
+    //MODIFIES: person
     // Set the amount of time you want to workout for each session
     private void setTime() {
         System.out.println("Please type in the time you want to work out everyday (in minutes)");
@@ -99,6 +101,7 @@ public class ScheduleApp {
         System.out.println("Thank you, I will organize your schedule accordingly!");
     }
 
+    //MODIFIES: Day
     // EFFECTS: set type of day - arm or leg
     private void setType() {
         System.out.println("Which day of the week do you want to set?");
@@ -111,7 +114,7 @@ public class ScheduleApp {
         
     }
 
-     
+     //MODIFIES: this
     // EFFECTS: add an exercise to a day in the list
     private void addExercise() {
         System.out.println("Here are your current type days set, add exercises accordingly to only these days.");
@@ -158,7 +161,8 @@ public class ScheduleApp {
         }
     }
 
-    // EFFECTS: remove a day from the list and update the current calories
+    //MODIFIES: Day
+    // EFFECTS: remove an exercise from the list and update the current calories and time
     private void remove() {
         System.out.println("Do you want to remove one or clear exercises for a day?");
         System.out.println("c -> clear");

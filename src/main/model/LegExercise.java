@@ -1,13 +1,13 @@
 package model;
 
-// List of leg exercises with time intervals, calories burned, and set of reps
+
 public class LegExercise implements Exercise {
     private String name;
     private int time;
     private int caloriesBurned;
     private int reps;
 
-    //EFFECTS: create a new Leg Exercise with calories, time intervals, set of reps
+    //EFFECTS: create a new Leg Exercise with name, calories, time intervals, set of reps
     public LegExercise(String name, int time, int caloriesBurned, int reps) {
         this.name = name;
         this.time = time;

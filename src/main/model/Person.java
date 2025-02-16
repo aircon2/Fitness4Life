@@ -2,14 +2,14 @@ package model;
 
 import java.util.ArrayList;
 
-// Person who wants a fitness schedule, keeps track of individual schedules, target caloric goal
+
 public class Person {
     private String name;
     private int targetCalories;
     private int time;
     private WeeklySchedule schedule;
 
-    // create a new person with a name and target calories and empty weekly schedule
+    // create a new person with a name and target calories, time for exercises, and empty weekly schedule
     public Person(String name, int targetCalories) {
         this.name = name;
         this.targetCalories = targetCalories;

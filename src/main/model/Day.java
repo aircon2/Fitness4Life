@@ -7,7 +7,7 @@ public class Day {
     private String name;
     private String type;
 
-    // Create a Day with list of exercises for each day
+    // Create a Day with list of exercises for each day that has name, type, and empty list of days
     public Day(String name) {
         this.name = name;
         type = "";

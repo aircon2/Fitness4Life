@@ -1,5 +1,5 @@
 package model;
-
+// Interface for Leg and Arm exercises to inherit methods from
 public interface Exercise {
     public void setName(String name);
     public void setTime(int time);

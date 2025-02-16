@@ -3,11 +3,11 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-// Produces weekly schedule and exercises done each day 
+
 public class WeeklySchedule {
     protected ArrayList<Day> schedule;
 
-    // creates a list of 7 days of the week 
+    // creates a weekly schedule list of 7 days of the week 
     public WeeklySchedule() {
         Day monday = new Day("monday");
         Day tuesday = new Day("tuesday");
@@ -101,7 +101,7 @@ public class WeeklySchedule {
         }
     }
 
-    //EFFECTS: checks if day entered is a day of the week
+    //EFFECTS: checks if day entered is a day of the week, returns the day if it matches or returns null if not found
     public Day validDay(String day) {
         for (Day d : schedule) {
             if (d.getName().equals(day)) {
@@ -121,6 +121,7 @@ public class WeeklySchedule {
         }
     }
 
+    //MODIFIES: this
     //EFFECTS: remove the exercise for given day, returns array list of the amount calories that exercise was worth and returns time it took
     public ArrayList<Integer> removeExercise(String day, String name) {
         ArrayList<Integer> returns = new ArrayList<>();
@@ -143,7 +144,7 @@ public class WeeklySchedule {
         return returns;
     }
 
-    //REQUIRES: schedule is not empty
+    //MODIFIES: this
     //EFFECTS: clears all exercises for given day, returns array list of calories the amount that exercise was worth and returns time it took
     public ArrayList<Integer> clearExercise(String day) {
         ArrayList<Integer> returns = new ArrayList<>();
