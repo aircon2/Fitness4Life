@@ -150,6 +150,8 @@ public class ScheduleApp {
                 } else {
                     System.out.println("You do not have enough time for this exercise!");
                 }
+            } else {
+                System.out.println("Invalid, couldn't add");
             }
         } else { 
             System.out.println("can't find that day"); 
