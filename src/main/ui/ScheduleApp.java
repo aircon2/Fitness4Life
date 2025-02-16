@@ -213,40 +213,34 @@ public class ScheduleApp {
     //EFFECTS: prints out the schedule
     @SuppressWarnings("methodlength")
     public void printSched(int currentCalories, int targetCalories, int timeLeft) {
-    System.out.printf("Target Calories: %10d   |   Current Calories: %10d  |   Time Remaining: %10d\n\n\n", targetCalories, currentCalories, timeLeft);
-    System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s |\n",
-                      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
-    System.out.println("--------------------------------------------------------------------------------------");
-    System.out.print("|");
-    ArrayList<String> types = sched.Type();
-
-    for (String s : types) {
-        System.out.printf(" %-10s |", s);
-    }
-
-
-    System.out.println(); 
-    System.out.println("--------------------------------------------------------------------------------------");
-    
-    int maxExercises = sched.maxExercises();
-ArrayList<ArrayList<Exercise>> exercises = sched.allExercises();
-
-for (int i = 0; i < maxExercises; i++) {
-    System.out.print("|");
-    
-    for (int k = 0; k < exercises.size(); k++) { // Loop through days
-        if (i < exercises.get(k).size()) { // Ensure index is within bounds
-            System.out.printf(" %-10s |", exercises.get(k).get(i).getName());
-        } else {
-            System.out.printf(" %-10s |", ""); // Print empty if no exercise
+        System.out.printf("Target Calories: %10d   |   Current Calories: %10d  |   Time Remaining: %10d\n\n\n", targetCalories, currentCalories, timeLeft);
+        System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s |\n",
+                        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+        System.out.println("--------------------------------------------------------------------------------------");
+        System.out.print("|");
+        ArrayList<String> types = sched.Type();
+        for (String s : types) {
+            System.out.printf(" %-10s |", s);
         }
-    }
-    
-    System.out.println(); // Move to the next row
-}
+        System.out.println(); 
+        System.out.println("--------------------------------------------------------------------------------------");
+        
+        int maxExercises = sched.maxExercises();
+        ArrayList<ArrayList<Exercise>> exercises = sched.allExercises();
 
-    System.out.println("--------------------------------------------------------------------------------------");
-}
+        for (int i = 0; i < maxExercises; i++) {
+            System.out.print("|");
+            for (int k = 0; k < exercises.size(); k++) { // Loop through days
+                if (i < exercises.get(k).size()) { // Ensure index is within bounds
+                    System.out.printf(" %-10s |", exercises.get(k).get(i).getName());
+                } else {
+                    System.out.printf(" %-10s |", ""); // Print empty if no exercise
+                }
+            }
+            System.out.println(); // Move to the next row
+        }
+        System.out.println("--------------------------------------------------------------------------------------");
+    }
 
 
 }
