@@ -39,8 +39,8 @@ public class WeeklySchedule {
     }
 
     //EFFECTS: prints out the schedule
-    public void printSched(int currentCalories, int targetCalories) {
-    System.out.printf("Target Calories: %10d   |   Current Calories: %10d\n\n", targetCalories, currentCalories);
+    public void printSched(int currentCalories, int targetCalories, int timeLeft) {
+    System.out.printf("Target Calories: %10d   |   Current Calories: %10d  |   Time Remaining: %10d\n\n\n", targetCalories, currentCalories, timeLeft);
     System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s |\n",
                       "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
 
@@ -84,15 +84,20 @@ public class WeeklySchedule {
     // MODIFIED: this
     // EFFECTS: set the type of day as arm or leg 
     public void setType(String day, String type) {
+        Boolean valid = false;
         for (Day d : schedule) {
             if (d.getName().equals(day)) { 
                if (type.equals("leg") || type.equals("arm")) {
                     d.setType(type);
+                    System.out.println("The type of day has been set!");
+                    valid = true;
                     break;
-               } else {
-                    System.out.println("Not a valid answer");
-               }
-            }
+               } 
+            
+            } 
+        }
+        if (!valid) {
+            System.out.println("Not a valid answer");
         }
     }
 
@@ -103,6 +108,7 @@ public class WeeklySchedule {
                 return d;
              }
         }
+        System.out.println("Not a valid day");
         return null;
     }
 
@@ -115,40 +121,51 @@ public class WeeklySchedule {
         }
     }
 
-    //EFFECTS: remove the exercise for given day, returns the amount that exercise was worth
-    public int removeExercise(String day, String name) {
+    //EFFECTS: remove the exercise for given day, returns array list of the amount calories that exercise was worth and returns time it took
+    public ArrayList<Integer> removeExercise(String day, String name) {
+        ArrayList<Integer> returns = new ArrayList<>();
         for (Day d : schedule) {
             if (d.getName().equals(day)) {
                 List<Exercise> exercises = d.getExercisesForTheDay();
                 for (int i=0; i < exercises.size(); i++) {
                     int cals = exercises.get(i).getCaloriesBurned() *  exercises.get(i).getReps();
+                    int time = exercises.get(i).getTimeForExercise() *  exercises.get(i).getReps();
                     exercises.remove(i);
                     System.out.println("exercise has been removed");
-                    return cals;
+                    returns.add(cals);
+                    returns.add(time);
+                    return returns;
                 }
             }
         } 
         System.out.println("no exercises to be cleared");
-        return 0;
+        returns.add(0);
+        return returns;
     }
 
     //REQUIRES: schedule is not empty
-    //EFFECTS: clears all exercises for given day, returns number of calories these exercises were worth
-    public int clearExercise(String day) {
+    //EFFECTS: clears all exercises for given day, returns array list of calories the amount that exercise was worth and returns time it took
+    public ArrayList<Integer> clearExercise(String day) {
+        ArrayList<Integer> returns = new ArrayList<>();
         int caloriesWorth = 0;
+        int timeWorth =0;
         for (Day d : schedule) {
             if (d.getName().equals(day)) {
                 List<Exercise> exercises = d.getExercisesForTheDay();
                 for (int i=0; i < exercises.size(); i++) {
                     caloriesWorth += exercises.get(i).getCaloriesBurned() * exercises.get(i).getReps();
+                    timeWorth += exercises.get(i).getTimeForExercise() *  exercises.get(i).getReps();
                 }
                 d.cheatDay();
                 System.out.println("Exercises have been cleared!");
-                return caloriesWorth;
+                returns.add(caloriesWorth);
+                returns.add(timeWorth);
+                return returns;
             }
         } 
         System.out.println("no exercises to be cleared");
-        return 0;
+        returns.add(0);
+        return returns;
     }
 
 

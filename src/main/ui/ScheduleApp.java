@@ -54,7 +54,7 @@ public class ScheduleApp {
     private void displayMenu() {
         System.out.println("Welcome to your personal weekly workout schedule! Please complete the steps below in order!");
         System.out.println("1. s -> set new caloric target");
-        System.out.println("2. t -> set time per workout");
+        System.out.println("2. t -> set total time you want to workout for the week");
         System.out.println("3. d -> set type of day");
         System.out.println("4. e -> add an exercise");
         System.out.println("5. c -> see current schedule");
@@ -72,7 +72,7 @@ public class ScheduleApp {
         } else if (command.equals("d")) {
             setType();
         } else if (command.equals("c")) {
-            sched.printSched(currentCalories, p.getTargetCalories());
+            sched.printSched(currentCalories, p.getTargetCalories(), p.getTime());
         } else if (command.equals("e")) {
            addExercise();
         } else if (command.equals("r")) {
@@ -108,7 +108,7 @@ public class ScheduleApp {
         String type = input.next();
         type  = type.toLowerCase();
         sched.setType(day, type);
-        System.out.println("The type of day has been set!");
+        
     }
 
      
@@ -168,7 +168,13 @@ public class ScheduleApp {
             System.out.println("Which day do you want to clear this exercise for?");
             sched.printTypeDay();
             String day = input.next();
-            currentCalories -= sched.clearExercise(day);
+
+            ArrayList<Integer> temp = sched.clearExercise(day);
+            if (temp.get(0) != 0) { 
+                currentCalories -= temp.get(0);
+                p.setTime(p.getTime() + temp.get(1));
+            }
+            
         } else if (c.equals("r")) {
             System.out.println("Which day do you want to remove this exercise for?");
             sched.printTypeDay();
@@ -176,7 +182,12 @@ public class ScheduleApp {
             input.nextLine();
             System.out.println("Whats the name of the exercise? (case sensitive)");
             String name = input.nextLine();
-            currentCalories -= sched.removeExercise(day, name);
+            ArrayList<Integer> temp = sched.removeExercise(day, name);
+            if (temp.get(0) != 0) {
+                currentCalories -= temp.get(0);
+                p.setTime(p.getTime() + temp.get(1));
+            }
+            
         } else {
             System.out.println("Not a valid entry");
         }

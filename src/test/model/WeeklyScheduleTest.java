@@ -71,15 +71,19 @@ public class WeeklyScheduleTest {
         Day monday = weeklySchedule.getDay("monday");
         Exercise exercise = new ArmExercise("Push-ups", 100, 10, 1);
         monday.addExercise(exercise);
-
-        assertEquals(10, weeklySchedule.removeExercise("monday", "Push-ups"));
-        assertEquals(0, monday.getExercisesForTheDay().size()); 
+    
+        ArrayList<Integer> result = weeklySchedule.removeExercise("monday", "Push-ups");
+        
+        assertEquals(10, result.get(0)); 
+        assertEquals(0, monday.getExercisesForTheDay().size());
     }
+    
 
    
     @Test
     void testRemoveExerciseNotFound() {
-        assertEquals(0, weeklySchedule.removeExercise("monday", "NonExistentExercise"));
+        ArrayList<Integer> result = weeklySchedule.removeExercise("monday", "Push-ups");
+        assertEquals(0, result.get(0)); 
     }
 
     
@@ -87,26 +91,31 @@ public class WeeklyScheduleTest {
     void testClearExercise() {
         Day tuesday = weeklySchedule.getDay("tuesday");
         tuesday.addExercise(new LegExercise("Squats", 50, 5, 5));
-        tuesday.addExercise(new ArmExercise("Burpees", 75, 4, 2));
-
-        int calories = weeklySchedule.clearExercise("tuesday");
-        assertEquals(33, calories); 
+        tuesday.addExercise(new ArmExercise("Burpees", 75, 4, 5));
+    
+        ArrayList<Integer> result = weeklySchedule.clearExercise("tuesday");
+    
+        assertEquals(45, result.get(0)); 
+        assertEquals(625, result.get(1)); 
         assertEquals(0, tuesday.getExercisesForTheDay().size()); 
     }
+    
 
    
-    @Test
+     @Test
     void testClearExerciseWhenEmpty() {
-        int caloriesBurned = weeklySchedule.clearExercise("sunday"); 
-        assertEquals(0, caloriesBurned);
+        ArrayList<Integer> result = weeklySchedule.clearExercise("sunday"); 
+
+        assertEquals(0, result.get(0));
     }
 
     @Test
     void testClearExerciseWhenInvalid() {
-        int caloriesBurned = weeklySchedule.clearExercise("wegvw"); 
-        assertEquals(0, caloriesBurned);
+        ArrayList<Integer> result = weeklySchedule.clearExercise("wegwu");
+
+        assertEquals(0, result.get(0));
     }
-    
+
 
    
     @Test
