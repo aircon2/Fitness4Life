@@ -26,9 +26,11 @@ public class DayTest {
 
     @Test
     void testAddExercise() {
+        assertEquals(null, testDay.getExercise("pull up"));
         testDay.addExercise(workout);
         exercises.add(workout);
         assertEquals(exercises, testDay.getExercisesForTheDay());
+        assertEquals(workout, testDay.getExercise("pull up"));
     }
 
     @Test
@@ -51,5 +53,16 @@ public class DayTest {
         testDay.cheatDay();
         assertEquals(exercises, testDay.getExercisesForTheDay());
     }
+
+    @Test
+    void testSetType() { 
+        testDay.setType("");
+        assertEquals("", testDay.getType());
+        testDay.setType("arm");
+        assertEquals("arm", testDay.getType());
+        testDay.setType("leg");
+        assertEquals("leg", testDay.getType());
+    }
+
 
 }

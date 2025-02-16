@@ -9,13 +9,13 @@ public class WeeklySchedule {
 
     // creates a list of 7 days of the week 
     public WeeklySchedule() {
-        Day monday = new Day("Monday");
-        Day tuesday = new Day("Tuesday");
-        Day wednesday = new Day("Wednesday");
-        Day thursday = new Day("Thursday");
-        Day friday = new Day("Friday");
-        Day saturday = new Day("Saturday");
-        Day sunday = new Day("Sunday");
+        Day monday = new Day("monday");
+        Day tuesday = new Day("tuesday");
+        Day wednesday = new Day("wednesday");
+        Day thursday = new Day("thursday");
+        Day friday = new Day("friday");
+        Day saturday = new Day("saturday");
+        Day sunday = new Day("sunday");
         schedule = new ArrayList<>();
         schedule.add(monday);
         schedule.add(tuesday);
@@ -28,7 +28,6 @@ public class WeeklySchedule {
 
 
 
-    // 
     //EFFECTS: return the day with (weekday) index position, if none are added, return null
     public Day getDay(String weekday) {
         for (Day d : schedule) {
@@ -82,6 +81,8 @@ public class WeeklySchedule {
         return schedule;
     }
 
+    // MODIFIED: this
+    // EFFECTS: set the type of day as arm or leg 
     public void setType(String day, String type) {
         for (Day d : schedule) {
             if (d.getName().equals(day)) { 
@@ -95,6 +96,7 @@ public class WeeklySchedule {
         }
     }
 
+    //EFFECTS: checks if day entered is a day of the week
     public Day validDay(String day) {
         for (Day d : schedule) {
             if (d.getName().equals(day)) {
@@ -103,6 +105,52 @@ public class WeeklySchedule {
         }
         return null;
     }
+
+    //EFFECTS: prints out the days with types set 
+    public void printTypeDay() {
+        for (Day d : schedule) {
+            if (d.getType() != "") {
+            System.out.println(d.getName() + " - " + d.getType());
+            }
+        }
+    }
+
+    //EFFECTS: remove the exercise for given day, returns the amount that exercise was worth
+    public int removeExercise(String day, String name) {
+        for (Day d : schedule) {
+            if (d.getName().equals(day)) {
+                List<Exercise> exercises = d.getExercisesForTheDay();
+                for (int i=0; i < exercises.size(); i++) {
+                    int cals = exercises.get(i).getCaloriesBurned() *  exercises.get(i).getReps();
+                    exercises.remove(i);
+                    System.out.println("exercise has been removed");
+                    return cals;
+                }
+            }
+        } 
+        System.out.println("no exercises to be cleared");
+        return 0;
+    }
+
+    //REQUIRES: schedule is not empty
+    //EFFECTS: clears all exercises for given day, returns number of calories these exercises were worth
+    public int clearExercise(String day) {
+        int caloriesWorth = 0;
+        for (Day d : schedule) {
+            if (d.getName().equals(day)) {
+                List<Exercise> exercises = d.getExercisesForTheDay();
+                for (int i=0; i < exercises.size(); i++) {
+                    caloriesWorth += exercises.get(i).getCaloriesBurned() * exercises.get(i).getReps();
+                }
+                d.cheatDay();
+                System.out.println("Exercises have been cleared!");
+                return caloriesWorth;
+            }
+        } 
+        System.out.println("no exercises to be cleared");
+        return 0;
+    }
+
 
 
 }

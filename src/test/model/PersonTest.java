@@ -55,5 +55,18 @@ public class PersonTest {
         assertEquals(202, test.getTargetCalories());
     }
 
+    @Test
+    void testSetTime() {
+        test.setTime(0);
+        assertEquals(0, test.getTime());
+    }
+
+    @Test
+    void testSetTimeHigh() {
+        test.setTime(10000);
+        assertEquals(10000, test.getTime());
+    }
+
+
 
 }

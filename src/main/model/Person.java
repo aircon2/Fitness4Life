@@ -61,9 +61,4 @@ public class Person {
         return targetCalories;
     }
 
-    //EFFECTS: return the persons list schedule of the week 
-    public WeeklySchedule getSchedule() {
-        return schedule;
-    }
-
 }

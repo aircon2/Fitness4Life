@@ -36,6 +36,7 @@ public class Day {
         return name;
     }
 
+    //REQUIRES: type is either "arm" or "leg"
     // MODIFIES: this
     // EFFECTS: returns type of day
     public void setType(String type) {

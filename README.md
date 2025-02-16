@@ -20,5 +20,5 @@ The target audience is adults and young adults who put off going to the gym. If 
 ## User Stories
 - As a user, I want to be able to add an exercise to my schedule and specify the name, calories burned, number of reps, and time it will take
 - As a user, I want to be able to see the list of workouts I need to complete for the week
-- AS a user, I want to be able to remove a workout from the list
+- As a user, I want to be able to remove a workout from the list
 - As a user, I want to be able to set leg days and arm days and have the exercises change accordingly
