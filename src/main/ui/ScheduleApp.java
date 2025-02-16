@@ -71,7 +71,7 @@ public class ScheduleApp {
         } else if (command.equals("d")) {
             setType();
         } else if (command.equals("c")) {
-            sched.printSched();
+            sched.printSched(currentCalories, p.getTargetCalories());
         } else if (command.equals("e")) {
            addExercise();
         } else {

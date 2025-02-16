@@ -14,7 +14,7 @@ public class DayTest {
 
     @BeforeEach
     void runBefore() {
-        testDay = new Day();
+        testDay = new Day("Monday");
         exercises = new ArrayList<>();
         workout = new ArmExercise("pull up", 20, 100, 10);
     }

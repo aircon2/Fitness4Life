@@ -1,10 +1,11 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // Produces weekly schedule and exercises done each day 
 public class WeeklySchedule {
-    private ArrayList<Day> schedule;
+    protected ArrayList<Day> schedule;
 
     // creates a list of 7 days of the week 
     public WeeklySchedule() {
@@ -39,30 +40,42 @@ public class WeeklySchedule {
     }
 
     //EFFECTS: prints out the schedule
-    public void printSched() {
-        // top right current calories planned: 
-        //header: leg or arm day
-         // Print headers
-         System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s |\n", 
-                           "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
-         System.out.println("----------------------------------------------------------------------------------------------");
- 
-         // Print events row by row
-         
-         for (Day day : schedule) {
-             for ( int i=0; i< day.getExercisesForTheDay().size(); i++) {
-                 if (i < day.getExercisesForTheDay().size()) { 
-                     System.out.printf("| %-10s ", day.getExercisesForTheDay().get(i).getName());
-                 } else {
-                     System.out.printf("| %-10s ", ""); // Empty space for missing events
-                 }
-             }
-         }
-         System.out.println("|");
-         
- 
-         System.out.println("----------------------------------------------------------------------------------------------");
-     }
+    public void printSched(int currentCalories, int targetCalories) {
+    System.out.printf("Target Calories: %10d   |   Current Calories: %10d\n\n", targetCalories, currentCalories);
+    System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s |\n",
+                      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+
+    System.out.println("--------------------------------------------------------------------------------------");
+    System.out.print("|");
+    for (Day day : schedule) {
+        String type = day.getType();  
+        System.out.printf(" %-10s |", type);
+    }
+    System.out.println(); 
+
+    System.out.println("--------------------------------------------------------------------------------------");
+
+    int maxExercises = 0;
+    for (Day day : schedule) {
+        if (day.getExercisesForTheDay().size() > maxExercises) {
+            maxExercises = day.getExercisesForTheDay().size();
+        }
+    }
+    for (int i = 0; i < maxExercises; i++) {
+        System.out.print("|"); 
+        for (Day day : schedule) {
+            List<Exercise> exercises = day.getExercisesForTheDay();
+            if (i < exercises.size()) {
+                System.out.printf(" %-10s |", exercises.get(i).getName());
+            } else {
+                System.out.printf(" %-10s |", "");  
+            }
+        }
+        System.out.println();  
+    }
+    System.out.println("--------------------------------------------------------------------------------------");
+}
+
 
     //EFFECTS: return the current schedule of exercises
     public ArrayList<Day> getSchedule() {

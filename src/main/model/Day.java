@@ -48,7 +48,6 @@ public class Day {
         return type;
     }
 
-
     // MODIFIES: this
     // EFFECTS: clears all exercises from day d
     public void cheatDay() {
