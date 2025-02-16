@@ -9,7 +9,10 @@ public class ArmExercise implements Exercise {
 
     //EFFECTS: create a new Arm Exercise with calories, time intervals, set of reps
     public ArmExercise(String name, int time, int caloriesBurned, int reps) {
-       //TODO
+       this.name = name;
+       this.time = time;
+       this.caloriesBurned = caloriesBurned;
+       this.reps = reps;
     }
 
     @Override
@@ -17,7 +20,7 @@ public class ArmExercise implements Exercise {
     // MODIFIES: this
     // EFFECTS: Set a name for given arm exercise 
     public void setName(String name) {
-        
+        this.name = name;
     }
 
     @Override
@@ -25,7 +28,7 @@ public class ArmExercise implements Exercise {
     // MODIFIES: this
     // EFFECTS: Set a time for given arm exercise 
     public void setTime(int time) {
-        
+        this.time = time;
     }
 
     @Override
@@ -33,7 +36,7 @@ public class ArmExercise implements Exercise {
     // MODIFIES: this
     // EFFECTS: Set the calories burned for given arm exercise 
     public void setCaloriesBurned(int calories) {
-        
+        this.caloriesBurned = calories;
     }
 
     @Override
@@ -41,31 +44,31 @@ public class ArmExercise implements Exercise {
     // MODIFIES: this
     // EFFECTS: Set the number of reps for given arm exercise 
     public void setReps(int reps) {
-        
+        this.reps = reps;
     }
 
     @Override
      // EFFECTS: returns name for arm exercise 
      public String getName() {
-        return "";
+        return name;
     }
 
     @Override
     // EFFECTS: returns time for arm exercise 
     public int getTimeForExercise() {
-        return -1;
+        return time;
     }
 
     @Override
-    // EFFECTS: returns time for arm exercise 
+    // EFFECTS: returns number of calories burned for exercise
     public int getCaloriesBurned() {
-        return -1;
+        return caloriesBurned;
     }
 
     @Override
     // EFFECTS: returns reps for arm exercise 
     public int getReps() {
-        return -1;
+        return reps;
     }
 
 }

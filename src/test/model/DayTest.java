@@ -21,7 +21,7 @@ public class DayTest {
 
     @Test 
     void testConstructor() {
-        assertEquals(testDay.getExercisesForTheDay(), exercises);
+        assertEquals(exercises, testDay.getExercisesForTheDay());
     }
 
     @Test
@@ -44,12 +44,12 @@ public class DayTest {
     }
 
     @Test
-    void testCheatDay() {
+    void testCheatDay() { 
         testDay.addExercise(workout);
         testDay.addExercise(workout);
         testDay.addExercise(workout);
         testDay.cheatDay();
-        assertEquals(null, testDay.getExercisesForTheDay());
+        assertEquals(exercises, testDay.getExercisesForTheDay());
     }
 
 }

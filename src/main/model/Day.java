@@ -4,31 +4,59 @@ import java.util.ArrayList;
 
 public class Day {
     private ArrayList<Exercise> day;
+    private String name;
+    private String type;
 
     // Create a Day with list of exercises for each day
-    public void Day() {
-        //TODO
+    public Day(String name) {
+        this.name = name;
+        type = "";
+        day = new ArrayList<>();
     }
 
     // REQUIRES: cannot have the same name as another exercise
     // MODIFIES: this
-    // EFFECTS: add a day to workout plan
+    // EFFECTS: add an exercise to daily workout plan
     public void addExercise(Exercise e) {
+        day.add(e);
     }
 
-    // EFFECTS: return the exercise picked 
-    public Exercise getExercise(String Name) {
+    // EFFECTS: return the exercise that matches name, if not return null
+    public Exercise getExercise(String name) {
+        for (Exercise e : day) {
+            if (e.getName() == name) {
+                return e;
+            }
+        }
         return null;
     }
+
+    // EFFECTS: returns name of day
+    public String getName() {
+        return name;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: returns type of day
+    public void setType(String type) {
+        this.type = type;
+    }
+
+
+    // EFFECTS: returns type of day
+    public String getType() {
+        return type;
+    }
+
 
     // MODIFIES: this
     // EFFECTS: clears all exercises from day d
     public void cheatDay() {
-
+        day.clear();
     }
 
     // EFFECTS: return the exercises needed to be completed per day
     public ArrayList<Exercise> getExercisesForTheDay() {
-        return null;
+        return day;
     }
 }

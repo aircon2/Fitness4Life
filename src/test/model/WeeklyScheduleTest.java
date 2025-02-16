@@ -59,7 +59,7 @@ public class WeeklyScheduleTest {
     void testRemoveDay() {
         testWeeklySchedule.addDay(testDay1);
         testWeeklySchedule.removeDay(testDay1);
-        assertEquals(null, testWeeklySchedule.getSchedule());
+        assertEquals(schedule, testWeeklySchedule.getSchedule());
     }
 
     @Test

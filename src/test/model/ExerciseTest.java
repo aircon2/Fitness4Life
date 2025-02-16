@@ -28,8 +28,8 @@ public class ExerciseTest {
     @Test
     void testConstructorLeg() {
         assertEquals("squats", legTest.getName());
-        assertEquals(20, legTest.getCaloriesBurned());
-        assertEquals(70, legTest.getReps());
+        assertEquals(70, legTest.getCaloriesBurned());
+        assertEquals(20, legTest.getReps());
         assertEquals(20, legTest.getTimeForExercise());
     }
 

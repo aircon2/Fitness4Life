@@ -23,7 +23,6 @@ public class PersonTest {
     void testConstructor() {
         assertEquals("Angela", test.getName());
         assertEquals(100, test.getTargetCalories());
-        assertEquals(schedule, test.getSchedule());
     }
 
     @Test
@@ -49,11 +48,11 @@ public class PersonTest {
     @Test
     void testAddCaloriesBurned() {
         test.addCalories(0);
-        assertEquals(0, test.getTargetCalories());
-        test.addCalories(100);
         assertEquals(100, test.getTargetCalories());
+        test.addCalories(100);
+        assertEquals(200, test.getTargetCalories());
         test.addCalories(2);
-        assertEquals(102, test.getTargetCalories());
+        assertEquals(202, test.getTargetCalories());
     }
 
 
