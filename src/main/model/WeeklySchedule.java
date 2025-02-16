@@ -69,7 +69,7 @@ public class WeeklySchedule {
         return null;
     }
 
-    //EFFECTS: returns the days with types set 
+    //EFFECTS: returns the days and their types
     public ArrayList<String> TypeDay() {
         ArrayList<String> returns = new ArrayList<>();
         for (Day d : schedule) {
@@ -94,7 +94,7 @@ public class WeeklySchedule {
     }
 
 
-    //EFFECTS: the max number of exercises in all 
+    //EFFECTS: the max number of exercises throughout all days
     public int maxExercises() {
        int maxExercises = 0;
         for (Day day : schedule) {
