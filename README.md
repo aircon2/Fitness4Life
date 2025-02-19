@@ -22,3 +22,6 @@ The target audience is adults and young adults who put off going to the gym. If 
 - As a user, I want to be able to see the list of workouts I need to complete for the week
 - As a user, I want to be able to remove a workout from the list
 - As a user, I want to be able to set leg days and arm days and have the exercises change accordingly
+- As a user, I want to have the option to save my weekly schedule to file
+- As a user, I want to be able to be able to load my weekly schedule from file
+
