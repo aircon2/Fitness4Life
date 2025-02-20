@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+// Day with name and type of day (arm or leg)
 public class Day {
     private ArrayList<Exercise> day;
     private String name;

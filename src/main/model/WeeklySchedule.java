@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-
+// weekly schedule to keep track of workouts
 public class WeeklySchedule {
     protected ArrayList<Day> schedule;
 

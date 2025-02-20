@@ -1,6 +1,6 @@
 package model;
 
-
+// leg exercises that can be recorded with name, time, calories burned, and reps
 public class LegExercise implements Exercise {
     private String name;
     private int time;

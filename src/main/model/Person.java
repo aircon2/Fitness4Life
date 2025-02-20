@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-
+// person with name, target calories, and time for each week they want to exercise
 public class Person {
     private String name;
     private int targetCalories;

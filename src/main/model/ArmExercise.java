@@ -1,6 +1,6 @@
 package model;
 
-
+// Arm exercises that can be recorded with name, time, calories burned, and reps
 public class ArmExercise implements Exercise {
     private String name;
     private int time;
