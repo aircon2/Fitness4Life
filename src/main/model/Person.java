@@ -2,8 +2,13 @@ package model;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 // person with name, target calories, and time for each week they want to exercise
-public class Person {
+public class Person implements Writable{
     private String name;
     private int targetCalories;
     private int time;
@@ -60,5 +65,12 @@ public class Person {
     public int getTargetCalories() {
         return targetCalories;
     }
+
+     @Override
+    // EFFECTS: creates new JSON object
+    public JSONObject toJson() {
+        return null;
+    }
+
 
 }

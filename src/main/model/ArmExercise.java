@@ -1,7 +1,11 @@
 package model;
 
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 // Arm exercises that can be recorded with name, time, calories burned, and reps
-public class ArmExercise implements Exercise {
+public class ArmExercise implements Exercise, Writable {
     private String name;
     private int time;
     private int caloriesBurned;
@@ -69,6 +73,13 @@ public class ArmExercise implements Exercise {
     // EFFECTS: returns reps for arm exercise 
     public int getReps() {
         return reps;
+    }
+
+
+     @Override
+    // EFFECTS: creates new JSON object
+    public JSONObject toJson() {
+        return null;
     }
 
 }

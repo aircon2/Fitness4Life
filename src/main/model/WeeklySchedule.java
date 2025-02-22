@@ -3,8 +3,13 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 // weekly schedule to keep track of workouts
-public class WeeklySchedule {
+public class WeeklySchedule implements Writable{
     protected ArrayList<Day> schedule;
 
     // creates a weekly schedule list of 7 days of the week 
@@ -159,6 +164,16 @@ public class WeeklySchedule {
         return returns;
     }
 
+    @Override
+    // EFFECTS: creates new JSON object
+    public JSONObject toJson() {
+        return null;
+    }
 
+    // EFFECTS: returns things in this WeeklySchedule as a JSON array
+    private JSONArray exercisesToJson() {
+
+        return null;
+    }
 
 }

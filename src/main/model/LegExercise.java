@@ -1,7 +1,11 @@
 package model;
 
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 // leg exercises that can be recorded with name, time, calories burned, and reps
-public class LegExercise implements Exercise {
+public class LegExercise implements Exercise, Writable {
     private String name;
     private int time;
     private int caloriesBurned;
@@ -69,6 +73,13 @@ public class LegExercise implements Exercise {
     // EFFECTS: returns reps for leg exercise 
     public int getReps() {
         return reps;
+    }
+
+
+     @Override
+    // EFFECTS: creates new JSON object
+    public JSONObject toJson() {
+        return null;
     }
 
 }
