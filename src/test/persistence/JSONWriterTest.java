@@ -20,7 +20,7 @@ public class JSONWriterTest extends JSONTest{
     void testWriterInvalidFile() {
         try {
             WeeklySchedule ws = new WeeklySchedule("ws");
-            JSONWriter writer = new JSONWriter("./data/my\0illegal:fileName.json");
+            JsonWriter writer = new JsonWriter("./data/my\0illegal:fileName.json");
             writer.open();
             fail("IOException was expected");
         } catch (IOException e) {
@@ -32,12 +32,12 @@ public class JSONWriterTest extends JSONTest{
     void testWriterEmptyWeeklySchedule() {
         try {
             WeeklySchedule ws = new WeeklySchedule("ws");
-            JSONWriter writer = new JSONWriter("./data/testWriterEmptyWeeklySchedule.json");
+            JsonWriter writer = new JsonWriter("./data/testWriterEmptyWeeklySchedule.json");
             writer.open();
             writer.write(ws);
             writer.close();
 
-            JSONReader reader = new JSONReader("./data/testWriterEmptyWeeklySchedule.json");
+            JsonReader reader = new JsonReader("./data/testWriterEmptyWeeklySchedule.json");
             ws = reader.read();
             assertEquals("ws", ws.getName());
             assertEquals(7, ws.allExercises().size());
@@ -54,14 +54,14 @@ public class JSONWriterTest extends JSONTest{
             LegExercise l = new LegExercise("squat", 1, 1, 1);
             ws.allExercises().get(0).add(a);
             ws.allExercises().get(1).add(l);
-            JSONWriter writer = new JSONWriter("./data/testWriterGeneralWeeklySchedule.json");
+            JsonWriter writer = new JsonWriter("./data/testWriterGeneralWeeklySchedule.json");
             writer.open();
             writer.write(ws);
             writer.close();
 
             
 
-            JSONReader reader = new JSONReader("./data/testWriterGeneralWeeklySchedule.json");
+            JsonReader reader = new JsonReader("./data/testWriterGeneralWeeklySchedule.json");
             ws = reader.read();
             assertEquals("ws", ws.getName());
             ArrayList<ArrayList<Exercise>> exercises = ws.allExercises();

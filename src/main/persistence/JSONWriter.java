@@ -7,13 +7,13 @@ import java.io.*;
 //CITATION: CODE MODELED FROM JSONSERIALIZATION DEMO
 // Represents a writer that writes JSON representation of WeeklySchedule to file
 
-public class JSONWriter {
+public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
     private String destination;
 
     // EFFECTS: constructs writer to write to destination file
-    public JSONWriter(String destination) {
+    public JsonWriter(String destination) {
         this.destination = destination;
     }
 

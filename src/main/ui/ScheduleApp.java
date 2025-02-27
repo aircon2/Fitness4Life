@@ -3,8 +3,8 @@ package ui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import persistence.JSONReader;
-import persistence.JSONWriter;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,8 +24,8 @@ public class ScheduleApp {
     private Scanner input;
     private int currentCalories;
 
-    private JSONWriter jsonWriter;
-    private JSONReader jsonReader;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
     
     //runs schedule application 
     public ScheduleApp() throws FileNotFoundException {
@@ -59,8 +59,8 @@ public class ScheduleApp {
         person = new Person("Angela", 0);
         sched = new WeeklySchedule("Angela");
         input = new Scanner(System.in);
-        jsonWriter = new JSONWriter(JSON_STORE);
-        jsonReader = new JSONReader(JSON_STORE);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         currentCalories = 0;
     }
 
@@ -116,7 +116,7 @@ public class ScheduleApp {
     //MODIFIES: person
     // Set the amount of time you want to workout for each session
     private void setTime() {
-        System.out.println("Please type in the time you want to work out everyday (in minutes)");
+        System.out.println("Please type in the time you want to work out every week (in minutes)");
         int amount = input.nextInt();
         person.setTime(amount);
         System.out.println("Thank you, I will organize your schedule accordingly!");

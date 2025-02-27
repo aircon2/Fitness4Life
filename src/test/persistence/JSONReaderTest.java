@@ -17,7 +17,7 @@ import java.util.List;
  class JSONReaderTest extends JSONTest{
     @Test
     void testReaderNonExistentFile() {
-        JSONReader reader = new JSONReader("./data/noSuchFile.json");
+        JsonReader reader = new JsonReader("./data/noSuchFile.json");
         try {
             WeeklySchedule ws = reader.read();
             fail("IOException expected");
@@ -28,7 +28,7 @@ import java.util.List;
 
     @Test
     void testReaderEmptyWeeklySchedule() {
-        JSONReader reader = new JSONReader("./data/testReaderEmptyWeeklySchedule.json");
+        JsonReader reader = new JsonReader("./data/testReaderEmptyWeeklySchedule.json");
         try {
             WeeklySchedule ws = reader.read();
             assertEquals("My ws", ws.getName());
@@ -40,7 +40,7 @@ import java.util.List;
 
     @Test
     void testReaderGeneralWeeklySchedule() {
-        JSONReader reader = new JSONReader("./data/testReaderGeneralWeeklySchedule.json");
+        JsonReader reader = new JsonReader("./data/testReaderGeneralWeeklySchedule.json");
         try {
             WeeklySchedule ws = reader.read();
             assertEquals("My ws", ws.getName());

@@ -16,11 +16,11 @@ import org.json.*;
 //CITATION: CODE MODELED FROM JSONSERIALIZATION DEMO
 // Represents a person that has a WeeklySchedule from JSON data stored in file
 
-public class JSONReader {
+public class JsonReader {
     private String source;
 
     // EFFECTS: constructs person that has a WeeklySchedule from source file
-    public JSONReader(String source) {
+    public JsonReader(String source) {
         this.source = source;
     }
 
@@ -60,7 +60,7 @@ public class JSONReader {
             JSONArray innerArray = outerArray.getJSONArray(i);
             for (int j = 0; j < innerArray.length(); j++) {
                 JSONObject exerciseObject = innerArray.getJSONObject(j);
-                addExercise(ws, exerciseObject); 
+                addExercise(ws, exerciseObject, i); 
             }
         }
     }
@@ -68,17 +68,38 @@ public class JSONReader {
 
     // MODIFIES: ws
     // EFFECTS: parses thingy from JSON object and adds it to WeeklySchedule
-    private void addExercise(WeeklySchedule ws, JSONObject jsonObject) {
-        String day = "monday"; 
-        if (jsonObject.has("day")) {
-            day = jsonObject.getString("day");
-        }
+    private void addExercise(WeeklySchedule ws, JSONObject jsonObject, int dayIndex) {
+        String day = getDay(dayIndex);
         String name = jsonObject.getString("name");
         int reps = jsonObject.getInt("reps");
         int cals = jsonObject.getInt("cals");
         int time = jsonObject.getInt("time");
         Exercise exercise = new ArmExercise(name, time, cals, reps);
         ws.getDay(day).addExercise(exercise);
+    }
+
+    private String getDay(int dayIndex) {
+        String temp = "";
+        if (dayIndex == 0) {
+            temp = "monday";
+        } else if (dayIndex == 1) {
+            temp = "tuesday";
+        } else if (dayIndex == 2) {
+            temp = "wednesday";
+        } else if (dayIndex == 3) {
+            temp = "thursday";
+        } else if (dayIndex == 4) {
+            temp = "friday";
+        } else if (dayIndex == 5) {
+            temp = "saturday";
+        } else if (dayIndex == 6) {
+            temp = "sunday";
+        } else {
+            temp = "monday";
+        }
+
+        return temp;
+
     }
 
    
