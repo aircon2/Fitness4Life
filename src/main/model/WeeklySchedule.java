@@ -12,9 +12,11 @@ import persistence.Writable;
 public class WeeklySchedule implements Writable {
     protected ArrayList<Day> schedule;
     protected String name;
+    protected Person person;
 
     // creates a weekly schedule list of 7 days of the week 
-    public WeeklySchedule(String name) {
+    public WeeklySchedule(String name, Person person) {
+        this.person = person;
         this.name = name;
         Day monday = new Day("monday");
         Day tuesday = new Day("tuesday");
@@ -34,7 +36,7 @@ public class WeeklySchedule implements Writable {
     }
 
 
-     //EFFECTS: return the name of the owner of the schedule
+    //EFFECTS: return the name of the owner of the schedule
     public String getName() {
         return name;
     }
@@ -49,6 +51,11 @@ public class WeeklySchedule implements Writable {
         return null;
     }
 
+    //EFFECTS: return the person who this schedule belongs to
+    public Person getPerson() {
+        return person;
+    }
+
 
     //EFFECTS: return the current schedule of exercises
     public ArrayList<Day> getSchedule() {
@@ -58,7 +65,6 @@ public class WeeklySchedule implements Writable {
     // MODIFIED: this
     // EFFECTS: set the type of day as arm or leg 
     public void setType(String day, String type) {
-        Boolean valid = false;
         for (Day d : schedule) {
             if (d.getName().equals(day)) { 
                 if (type.equals("leg") || type.equals("arm")) {
@@ -177,14 +183,27 @@ public class WeeklySchedule implements Writable {
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
+        json.put("person", person.toJson());
+        json.put("types", typesToJson());
         json.put("exercises", exercisesToJson());
         return json;
     }
 
+
+    // EFFECTS: returns types of days in this WeeklySchedule as a JSON array
+    private JSONArray typesToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (String t : type()) {
+            jsonArray.put(t);
+        }
+        return jsonArray;
+    }
+
+
     // EFFECTS: returns exercises in this WeeklySchedule as a JSON array
     private JSONArray exercisesToJson() {
         JSONArray jsonArray = new JSONArray();
-        for (Day d:schedule) {
+        for (Day d : schedule) {
             jsonArray.put(d.exercisesToJson());
         }
         return jsonArray;

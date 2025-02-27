@@ -1,8 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import persistence.Writable;
@@ -12,14 +9,12 @@ public class Person implements Writable {
     private String name;
     private int targetCalories;
     private int time;
-    private WeeklySchedule schedule;
 
     // create a new person with a name and target calories, time for exercises, and empty weekly schedule
-    public Person(String name, int targetCalories) {
+    public Person(String name, int targetCalories, int time) {
         this.name = name;
         this.targetCalories = targetCalories;
-        time = 0;
-        schedule = new WeeklySchedule(name);
+        this.time = time;
     }
 
 
@@ -71,7 +66,7 @@ public class Person implements Writable {
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
-        json.put("targetCal", targetCalories);
+        json.put("targetCalories", targetCalories);
         json.put("time", time);
         return json;
     }

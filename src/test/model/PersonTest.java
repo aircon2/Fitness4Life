@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-
 
 
 public class PersonTest {
@@ -15,8 +13,8 @@ public class PersonTest {
     
     @BeforeEach
     void runBefore() {
-        test = new Person("Angela", 100);
-        schedule = new WeeklySchedule("Angela");
+        test = new Person("Angela", 100, 0);
+        schedule = new WeeklySchedule("Angela", test);
     }
 
     @Test

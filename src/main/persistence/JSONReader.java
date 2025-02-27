@@ -1,9 +1,9 @@
 package persistence;
+
 import model.Day;
 import model.Exercise;
 import model.Person;
 import model.WeeklySchedule;
-import model.LegExercise; 
 import model.ArmExercise;
 
 import java.io.IOException;
@@ -43,10 +43,34 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
+    // EFFECTS: parses person from JSON object and returns it
+    private Person parsePerson(JSONObject jsonObject) {
+        String name = jsonObject.getString("name");
+        int targetCalories = jsonObject.getInt("targetCalories");
+        int time = jsonObject.getInt("time");
+        Person person = new Person(name, targetCalories, time);
+        return person;
+    }
+
     // EFFECTS: parses WeeklySchedule from JSON object and returns it
     private WeeklySchedule parseWeeklySchedule(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
-        WeeklySchedule ws = new WeeklySchedule(name);
+        JSONObject personJson = jsonObject.getJSONObject("person");
+        Person person = parsePerson(personJson);
+
+        WeeklySchedule ws = new WeeklySchedule(name, person); // Pass person to constructor
+
+        // Retrieve types from JSON and assign to each day dynamically
+        JSONArray typesArray = jsonObject.getJSONArray("types");
+        int index = 0;
+    
+        for (Day d : ws.getSchedule()) {
+            if (index < typesArray.length()) {
+                String type = typesArray.getString(index);
+                d.setType(type);
+            }
+            index++;
+        }
         addExercises(ws, jsonObject);
         return ws;
     }

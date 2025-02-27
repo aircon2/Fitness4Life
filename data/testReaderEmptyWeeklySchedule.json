@@ -1,4 +1,18 @@
 {
+    "person": {
+        "name": "Angela",
+        "targetCalories": 0,
+        "time": 0
+    },
+    "types":[
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ],
     "exercises": [
         [],
         [],

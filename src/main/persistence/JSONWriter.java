@@ -1,4 +1,5 @@
 package persistence;
+
 import model.WeeklySchedule;
 import org.json.JSONObject;
 

@@ -1,17 +1,31 @@
 {
+    "types": [
+        "",
+        "arm",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ],
     "exercises": [
-        [],
-        [],
-        [],
-        [],
-        [],
         [],
         [{
             "reps": 1,
-            "name": "jweb",
-            "time": 10,
-            "cals": 100
-        }]
+            "name": "wjeib",
+            "time": 1,
+            "cals": 10
+        }],
+        [],
+        [],
+        [],
+        [],
+        []
     ],
+    "person": {
+        "name": "Angela",
+        "time": 999,
+        "targetCalories": 1000
+    },
     "name": "Angela"
 }

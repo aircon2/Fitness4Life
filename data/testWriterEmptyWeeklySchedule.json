@@ -1,4 +1,13 @@
 {
+    "types": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ],
     "exercises": [
         [],
         [],
@@ -8,5 +17,10 @@
         [],
         []
     ],
-    "name": "ws"
+    "person": {
+        "name": "Angela",
+        "time": 0,
+        "targetCalories": 0
+    },
+    "name": "My ws"
 }

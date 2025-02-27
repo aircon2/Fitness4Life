@@ -77,7 +77,7 @@ public class Day {
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < getExercisesForTheDay().size(); i++) {
             jsonArray.put(getExercisesForTheDay().get(i).toJson());
-        } // different types, arm and leg, how do they call the right one
+        } 
         return jsonArray;
     }
 

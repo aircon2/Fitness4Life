@@ -2,10 +2,8 @@ package model;
 
 import org.json.JSONObject;
 
-import persistence.Writable;
-
 // leg exercises that can be recorded with name, time, calories burned, and reps
-public class LegExercise implements Exercise, Writable {
+public class LegExercise implements Exercise {
     private String name;
     private int time;
     private int caloriesBurned;

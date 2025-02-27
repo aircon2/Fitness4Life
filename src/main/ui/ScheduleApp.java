@@ -1,17 +1,13 @@
 package ui;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import persistence.JsonReader;
 import persistence.JsonWriter;
-
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import model.ArmExercise;
-import model.Day;
 import model.Exercise;
 import model.LegExercise;
 import model.Person;
@@ -56,8 +52,8 @@ public class ScheduleApp {
     // MODIFIES: this
     // EFFECTS: initializes person 
     public void init() {
-        person = new Person("Angela", 0);
-        sched = new WeeklySchedule("Angela");
+        person = new Person("Angela", 0, 0);
+        sched = new WeeklySchedule("Angela", person);
         input = new Scanner(System.in);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
