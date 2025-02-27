@@ -1,0 +1,22 @@
+{
+    "exercises": [
+        [{
+            "reps": 1,
+            "name": "dumbbell",
+            "time": 1,
+            "cals": 1
+        }],
+        [{
+            "reps": 1,
+            "name": "squat",
+            "time": 1,
+            "cals": 1
+        }],
+        [],
+        [],
+        [],
+        [],
+        []
+    ],
+    "name": "ws"
+}

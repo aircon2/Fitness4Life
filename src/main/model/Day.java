@@ -2,6 +2,9 @@ package model;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 // Day with name and type of day (arm or leg)
 public class Day {
     private ArrayList<Exercise> day;
@@ -60,4 +63,23 @@ public class Day {
     public ArrayList<Exercise> getExercisesForTheDay() {
         return day;
     }
+
+
+    // EFFECTS: creates new JSON object
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("exercises", exercisesToJson());
+        return json;
+    }
+
+     // EFFECTS: returns exercises in this Day as a JSON array
+    public JSONArray exercisesToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (int i =0; i<getExercisesForTheDay().size(); i++){
+            jsonArray.put(getExercisesForTheDay().get(i).toJson());
+        } // different types, arm and leg, how do they call the right one
+        return jsonArray;
+    }
+
+
 }

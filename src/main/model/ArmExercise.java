@@ -76,10 +76,15 @@ public class ArmExercise implements Exercise, Writable {
     }
 
 
-     @Override
+    @Override
     // EFFECTS: creates new JSON object
     public JSONObject toJson() {
-        return null;
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("reps", reps);
+        json.put("time", time);
+        json.put("cals", caloriesBurned);
+        return json;
     }
 
 }

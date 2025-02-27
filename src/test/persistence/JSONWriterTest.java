@@ -19,7 +19,7 @@ public class JSONWriterTest extends JSONTest{
     @Test
     void testWriterInvalidFile() {
         try {
-            WeeklySchedule ws = new WeeklySchedule();
+            WeeklySchedule ws = new WeeklySchedule("ws");
             JSONWriter writer = new JSONWriter("./data/my\0illegal:fileName.json");
             writer.open();
             fail("IOException was expected");
@@ -29,9 +29,9 @@ public class JSONWriterTest extends JSONTest{
     }
 
     @Test
-    void testWriterEmptyWorkroom() {
+    void testWriterEmptyWeeklySchedule() {
         try {
-            WeeklySchedule ws = new WeeklySchedule();
+            WeeklySchedule ws = new WeeklySchedule("ws");
             JSONWriter writer = new JSONWriter("./data/testWriterEmptyWeeklySchedule.json");
             writer.open();
             writer.write(ws);
@@ -39,6 +39,7 @@ public class JSONWriterTest extends JSONTest{
 
             JSONReader reader = new JSONReader("./data/testWriterEmptyWeeklySchedule.json");
             ws = reader.read();
+            assertEquals("My Schedule", ws.getName());
             assertEquals(0, ws.allExercises().size());
         } catch (IOException e) {
             fail("Exception should not have been thrown");
@@ -46,13 +47,13 @@ public class JSONWriterTest extends JSONTest{
     }
 
     @Test
-    void testWriterGeneralWorkroom() {
+    void testWriterGeneralWeeklySchedule() {
         try {
-            WeeklySchedule ws = new WeeklySchedule();
+            WeeklySchedule ws = new WeeklySchedule("ws");
             ArmExercise a = new ArmExercise("dumbbell", 1, 1, 1);
             LegExercise l = new LegExercise("squat", 1, 1, 1);
-            ws.getDay("Monday").addExercise(a);
-            ws.getDay("Tuesday").addExercise(l);
+            ws.allExercises().get(0).add(a);
+            ws.allExercises().get(1).add(l);
             JSONWriter writer = new JSONWriter("./data/testWriterGeneralWeeklySchedule.json");
             writer.open();
             writer.write(ws);
@@ -62,6 +63,7 @@ public class JSONWriterTest extends JSONTest{
 
             JSONReader reader = new JSONReader("./data/testWriterGeneralWeeklySchedule.json");
             ws = reader.read();
+            assertEquals("My Schedule", ws.getName());
             ArrayList<ArrayList<Exercise>> exercises = ws.allExercises();
             assertEquals(7, exercises.size());
             assertEquals(1, exercises.get(0).size());

@@ -19,7 +19,7 @@ public class Person implements Writable{
         this.name = name;
         this.targetCalories = targetCalories;
         time = 0;
-        schedule = new WeeklySchedule();
+        schedule = new WeeklySchedule(name);
     }
 
 
@@ -66,10 +66,14 @@ public class Person implements Writable{
         return targetCalories;
     }
 
-     @Override
+    @Override
     // EFFECTS: creates new JSON object
     public JSONObject toJson() {
-        return null;
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("targetCal", targetCalories);
+        json.put("time", time);
+        return json;
     }
 
 

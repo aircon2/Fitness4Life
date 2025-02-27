@@ -3,6 +3,12 @@ package ui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import persistence.JSONReader;
+import persistence.JSONWriter;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import model.ArmExercise;
 import model.Day;
@@ -12,13 +18,17 @@ import model.Person;
 import model.WeeklySchedule;
 
 public class ScheduleApp {
+    private static final String JSON_STORE = "./data/WeeklySchedule.json";
     private Person p;
     private WeeklySchedule sched;
     private Scanner input;
     private int currentCalories;
+
+    private JSONWriter jsonWriter;
+    private JSONReader jsonReader;
     
     //runs schedule application 
-    public ScheduleApp() {
+    public ScheduleApp() throws FileNotFoundException {
         runSchedule();
     }
 
@@ -47,8 +57,10 @@ public class ScheduleApp {
     // EFFECTS: initializes person 
     public void init() {
         p = new Person("Angela", 0);
-        sched = new WeeklySchedule();
+        sched = new WeeklySchedule("Angela");
         input = new Scanner(System.in);
+        jsonWriter = new JSONWriter(JSON_STORE);
+        jsonReader = new JSONReader(JSON_STORE);
         currentCalories = 0;
     }
 
@@ -61,7 +73,9 @@ public class ScheduleApp {
         System.out.println("4. e -> add an exercise");
         System.out.println("5. c -> see current schedule");
         System.out.println("6. r -> remove or clear exercise");
-        System.out.println("7. q -> quit");
+        System.out.println("7. f -> save work room to file");
+        System.out.println("8. l -> load work room from file");
+        System.out.println("9. q -> quit");
     }
 
     // MODIFIES: this
@@ -79,6 +93,10 @@ public class ScheduleApp {
            addExercise();
         } else if (command.equals("r")) {
             remove();
+        } else if (command.equals("f")) {
+            saveWorkRoom();
+        } else if (command.equals("l")) {
+            loadWorkRoom();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -242,5 +260,27 @@ public class ScheduleApp {
         System.out.println("--------------------------------------------------------------------------------------");
     }
 
+    // EFFECTS: saves the WeeklySchedule to file
+    private void saveWorkRoom() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(sched);
+            jsonWriter.close();
+            System.out.println("Saved " + sched.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads WeeklySchedule from file
+    private void loadWorkRoom() {
+        try {
+            sched = jsonReader.read();
+            System.out.println("Loaded " + sched.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
 
 }

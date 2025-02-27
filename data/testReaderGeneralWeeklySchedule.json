@@ -1,0 +1,51 @@
+{
+    "exercises": [
+        [],
+        [
+            {
+                "name": "squat",
+                "reps": 1,
+                "time": 3, 
+                "cals": 1
+            }, 
+            {
+                "name": "core",
+                "reps": 1,
+                "time": 1, 
+                "cals": 2
+            }
+        ],
+        [
+            {
+                "name": "lift",
+                "reps": 1,
+                "time": 3, 
+                "cals": 2
+            }, 
+            {
+                "name": "punch",
+                "reps": 1,
+                "time": 9, 
+                "cals": 1
+            }
+        ],
+        [],
+        [],
+        [],
+        [
+            {
+                "name": "fight",
+                "reps": 1,
+                "time": 3, 
+                "cals": 1
+            }, 
+            {
+                "name": "v Snap",
+                "reps": 1,
+                "time": 2, 
+                "cals": 3
+            }
+        ]
+    ],
+    "name": "My ws"
+}

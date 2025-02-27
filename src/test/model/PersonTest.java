@@ -16,7 +16,7 @@ public class PersonTest {
     @BeforeEach
     void runBefore() {
         test = new Person("Angela", 100);
-        schedule = new WeeklySchedule();
+        schedule = new WeeklySchedule("Angela");
     }
 
     @Test

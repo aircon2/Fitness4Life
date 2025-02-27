@@ -28,9 +28,10 @@ import java.util.List;
 
     @Test
     void testReaderEmptyWeeklySchedule() {
-        JSONReader reader = new JSONReader("./data/testReaderEmptyWorkRoom.json");
+        JSONReader reader = new JSONReader("./data/testReaderEmptyWeeklySchedule.json");
         try {
             WeeklySchedule ws = reader.read();
+            assertEquals("My Schedule", ws.getName());
             assertEquals(7, ws.allExercises().size());
         } catch (IOException e) {
             fail("Couldn't read from file");
@@ -39,10 +40,10 @@ import java.util.List;
 
     @Test
     void testReaderGeneralWeeklySchedule() {
-        JSONReader reader = new JSONReader("./data/testReaderGeneralWorkRoom.json");
+        JSONReader reader = new JSONReader("./data/testReaderGeneralWeeklySchedule.json");
         try {
             WeeklySchedule ws = reader.read();
-    
+            assertEquals("My Schedule", ws.getName());
             ArrayList<ArrayList<Exercise>> exercises = ws.allExercises();
             assertEquals(7, exercises.size());
             assertEquals(1, exercises.get(0).size());

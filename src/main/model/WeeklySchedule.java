@@ -11,9 +11,11 @@ import persistence.Writable;
 // weekly schedule to keep track of workouts
 public class WeeklySchedule implements Writable{
     protected ArrayList<Day> schedule;
+    protected String name;
 
     // creates a weekly schedule list of 7 days of the week 
-    public WeeklySchedule() {
+    public WeeklySchedule(String name) {
+        this.name = name;
         Day monday = new Day("monday");
         Day tuesday = new Day("tuesday");
         Day wednesday = new Day("wednesday");
@@ -32,6 +34,10 @@ public class WeeklySchedule implements Writable{
     }
 
 
+     //EFFECTS: return the name of the owner of the schedule
+     public String getName() {
+        return name;
+    }
 
     //EFFECTS: return the day with (weekday) index position, if none are added, return null
     public Day getDay(String weekday) {
@@ -167,13 +173,18 @@ public class WeeklySchedule implements Writable{
     @Override
     // EFFECTS: creates new JSON object
     public JSONObject toJson() {
-        return null;
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("exercises", exercisesToJson());
+        return json;
     }
 
-    // EFFECTS: returns things in this WeeklySchedule as a JSON array
+    // EFFECTS: returns exercises in this WeeklySchedule as a JSON array
     private JSONArray exercisesToJson() {
-
-        return null;
+        JSONArray jsonArray = new JSONArray();
+        for (Day d:schedule){
+            jsonArray.put(d.exercisesToJson());
+        }
+        return jsonArray;
     }
-
 }

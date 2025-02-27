@@ -11,8 +11,13 @@ public class WeeklyScheduleTest {
 
     @BeforeEach
     void runBefore() {
-        weeklySchedule = new WeeklySchedule(); 
+        weeklySchedule = new WeeklySchedule("ws"); 
 
+    }
+
+    @Test
+    void testGetName(){
+        assertEquals("ws", weeklySchedule.getName());
     }
 
     @Test
