@@ -130,7 +130,7 @@ public class WeeklyScheduleTest {
         weeklySchedule.setType("tuesday", "arm");
         temp.add("monday - leg");
         temp.add("tuesday - arm");
-        assertEquals(temp, weeklySchedule.TypeDay()); 
+        assertEquals(temp, weeklySchedule.typeDay()); 
     }
 
     
@@ -153,7 +153,7 @@ public class WeeklyScheduleTest {
         expected.add("");      
         expected.add("");     
 
-        assertEquals(expected, weeklySchedule.Type());
+        assertEquals(expected, weeklySchedule.type());
     }
 
     @Test

@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 import org.json.*;
 //CITATION: CODE MODELED FROM JSONSERIALIZATION DEMO
 // Represents a person that has a WeeklySchedule from JSON data stored in file
+
 public class JSONReader {
     private String source;
 
@@ -53,21 +54,29 @@ public class JSONReader {
     // MODIFIES: ws
     // EFFECTS: parses exercises from JSON object and adds them to workroom
     private void addExercises(WeeklySchedule ws, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("exercises");
-        for (Object json : jsonArray) {
-            JSONObject nextExercise = (JSONObject) json;
-            addExercise(ws, nextExercise);
+        JSONArray outerArray = jsonObject.getJSONArray("exercises");
+    
+        for (int i = 0; i < outerArray.length(); i++) {
+            JSONArray innerArray = outerArray.getJSONArray(i);
+            for (int j = 0; j < innerArray.length(); j++) {
+                JSONObject exerciseObject = innerArray.getJSONObject(j);
+                addExercise(ws, exerciseObject); 
+            }
         }
     }
+
 
     // MODIFIES: ws
     // EFFECTS: parses thingy from JSON object and adds it to WeeklySchedule
     private void addExercise(WeeklySchedule ws, JSONObject jsonObject) {
-        String day = jsonObject.getString("day");
+        String day = "monday"; 
+        if (jsonObject.has("day")) {
+            day = jsonObject.getString("day");
+        }
         String name = jsonObject.getString("name");
         int reps = jsonObject.getInt("reps");
         int cals = jsonObject.getInt("cals");
-        int time =jsonObject.getInt("time");
+        int time = jsonObject.getInt("time");
         Exercise exercise = new ArmExercise(name, time, cals, reps);
         ws.getDay(day).addExercise(exercise);
     }

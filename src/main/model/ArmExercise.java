@@ -13,10 +13,10 @@ public class ArmExercise implements Exercise, Writable {
 
     //EFFECTS: create a new Arm Exercise with calories, time intervals, set of reps
     public ArmExercise(String name, int time, int caloriesBurned, int reps) {
-       this.name = name;
-       this.time = time;
-       this.caloriesBurned = caloriesBurned;
-       this.reps = reps;
+        this.name = name;
+        this.time = time;
+        this.caloriesBurned = caloriesBurned;
+        this.reps = reps;
     }
 
     @Override

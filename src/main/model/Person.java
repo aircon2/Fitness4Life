@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 // person with name, target calories, and time for each week they want to exercise
-public class Person implements Writable{
+public class Person implements Writable {
     private String name;
     private int targetCalories;
     private int time;

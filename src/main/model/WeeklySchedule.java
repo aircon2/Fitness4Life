@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 // weekly schedule to keep track of workouts
-public class WeeklySchedule implements Writable{
+public class WeeklySchedule implements Writable {
     protected ArrayList<Day> schedule;
     protected String name;
 
@@ -35,7 +35,7 @@ public class WeeklySchedule implements Writable{
 
 
      //EFFECTS: return the name of the owner of the schedule
-     public String getName() {
+    public String getName() {
         return name;
     }
 
@@ -61,10 +61,10 @@ public class WeeklySchedule implements Writable{
         Boolean valid = false;
         for (Day d : schedule) {
             if (d.getName().equals(day)) { 
-               if (type.equals("leg") || type.equals("arm")) {
+                if (type.equals("leg") || type.equals("arm")) {
                     d.setType(type);
                     break;
-               } 
+                } 
             
             } 
         }
@@ -75,13 +75,13 @@ public class WeeklySchedule implements Writable{
         for (Day d : schedule) {
             if (d.getName().equals(day)) {
                 return d;
-             }
+            }
         }
         return null;
     }
 
     //EFFECTS: returns the days and their types
-    public ArrayList<String> TypeDay() {
+    public ArrayList<String> typeDay() {
         ArrayList<String> returns = new ArrayList<>();
         for (Day d : schedule) {
             if (d.getType() != "") {
@@ -92,11 +92,11 @@ public class WeeklySchedule implements Writable{
     }
 
      //EFFECTS: returns list of types for each day
-     public ArrayList<String> Type() {
+    public ArrayList<String> type() {
         ArrayList<String> returns = new ArrayList<>();
         for (Day d : schedule) {
             if (d.getType() != "") {
-                returns.add( d.getType());
+                returns.add(d.getType());
             } else {
                 returns.add("");
             }
@@ -107,7 +107,7 @@ public class WeeklySchedule implements Writable{
 
     //EFFECTS: the max number of exercises throughout all days
     public int maxExercises() {
-       int maxExercises = 0;
+        int maxExercises = 0;
         for (Day day : schedule) {
             if (day.getExercisesForTheDay().size() > maxExercises) {
                 maxExercises = day.getExercisesForTheDay().size();
@@ -122,18 +122,19 @@ public class WeeklySchedule implements Writable{
         for (Day day : schedule) {
             returns.add(day.getExercisesForTheDay());
         }
-         return returns;
-     }
+        return returns;
+    }
     
 
     //MODIFIES: this
-    //EFFECTS: remove the exercise for given day, returns array list of the amount calories that exercise was worth and returns time it took
+    //EFFECTS: remove the exercise for given day, returns array list of the
+    //         amount calories that exercise was worth and returns time it took
     public ArrayList<Integer> removeExercise(String day, String name) {
         ArrayList<Integer> returns = new ArrayList<>();
         for (Day d : schedule) {
             if (d.getName().equals(day)) {
                 List<Exercise> exercises = d.getExercisesForTheDay();
-                for (int i=0; i < exercises.size(); i++) {
+                for (int i = 0; i < exercises.size(); i++) {
                     int cals = exercises.get(i).getCaloriesBurned() *  exercises.get(i).getReps();
                     int time = exercises.get(i).getTimeForExercise() *  exercises.get(i).getReps();
                     exercises.remove(i);
@@ -148,15 +149,16 @@ public class WeeklySchedule implements Writable{
     }
 
     //MODIFIES: this
-    //EFFECTS: clears all exercises for given day, returns array list of calories the amount that exercise was worth and returns time it took
+    //EFFECTS: clears all exercises for given day, returns array list of calories 
+    //         the amount that exercise was worth and returns time it took
     public ArrayList<Integer> clearExercise(String day) {
         ArrayList<Integer> returns = new ArrayList<>();
         int caloriesWorth = 0;
-        int timeWorth =0;
+        int timeWorth = 0;
         for (Day d : schedule) {
             if (d.getName().equals(day)) {
                 List<Exercise> exercises = d.getExercisesForTheDay();
-                for (int i=0; i < exercises.size(); i++) {
+                for (int i = 0; i < exercises.size(); i++) {
                     caloriesWorth += exercises.get(i).getCaloriesBurned() * exercises.get(i).getReps();
                     timeWorth += exercises.get(i).getTimeForExercise() *  exercises.get(i).getReps();
                 }
@@ -182,7 +184,7 @@ public class WeeklySchedule implements Writable{
     // EFFECTS: returns exercises in this WeeklySchedule as a JSON array
     private JSONArray exercisesToJson() {
         JSONArray jsonArray = new JSONArray();
-        for (Day d:schedule){
+        for (Day d:schedule) {
             jsonArray.put(d.exercisesToJson());
         }
         return jsonArray;

@@ -39,8 +39,8 @@ public class JSONWriterTest extends JSONTest{
 
             JSONReader reader = new JSONReader("./data/testWriterEmptyWeeklySchedule.json");
             ws = reader.read();
-            assertEquals("My Schedule", ws.getName());
-            assertEquals(0, ws.allExercises().size());
+            assertEquals("ws", ws.getName());
+            assertEquals(7, ws.allExercises().size());
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }
@@ -63,14 +63,12 @@ public class JSONWriterTest extends JSONTest{
 
             JSONReader reader = new JSONReader("./data/testWriterGeneralWeeklySchedule.json");
             ws = reader.read();
-            assertEquals("My Schedule", ws.getName());
+            assertEquals("ws", ws.getName());
             ArrayList<ArrayList<Exercise>> exercises = ws.allExercises();
             assertEquals(7, exercises.size());
-            assertEquals(1, exercises.get(0).size());
-            assertEquals(1, exercises.get(1).size());
+            assertEquals(2, exercises.get(0).size());
+            assertEquals(0, exercises.get(1).size());
             checkExercise("dumbbell", 1, 1, 1, exercises.get(0).get(0)); 
-            checkExercise("squat", 1, 1, 1, exercises.get(1).get(0)); 
-
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }

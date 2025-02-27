@@ -19,7 +19,7 @@ import model.WeeklySchedule;
 
 public class ScheduleApp {
     private static final String JSON_STORE = "./data/WeeklySchedule.json";
-    private Person p;
+    private Person person;
     private WeeklySchedule sched;
     private Scanner input;
     private int currentCalories;
@@ -56,7 +56,7 @@ public class ScheduleApp {
     // MODIFIES: this
     // EFFECTS: initializes person 
     public void init() {
-        p = new Person("Angela", 0);
+        person = new Person("Angela", 0);
         sched = new WeeklySchedule("Angela");
         input = new Scanner(System.in);
         jsonWriter = new JSONWriter(JSON_STORE);
@@ -66,7 +66,8 @@ public class ScheduleApp {
 
     // EFFECTS: displays menu of input needed from user
     private void displayMenu() {
-        System.out.println("Welcome to your personal weekly workout schedule! Please complete the steps below in order!");
+        System.out.println("Welcome to your personal weekly workout schedule!"
+                            + "Please complete the steps below in order!");
         System.out.println("1. s -> set new caloric target");
         System.out.println("2. t -> set total time you want to workout for the week");
         System.out.println("3. d -> set type of day");
@@ -84,13 +85,13 @@ public class ScheduleApp {
         if (command.equals("s")) {
             setCal();
         } else if (command.equals("t")) {
-           setTime();
+            setTime();
         } else if (command.equals("d")) {
             setType();
         } else if (command.equals("c")) {
-            printSched(currentCalories, p.getTargetCalories(), p.getTime());
+            printSched(currentCalories, person.getTargetCalories(), person.getTime());
         } else if (command.equals("e")) {
-           addExercise();
+            addExercise();
         } else if (command.equals("r")) {
             remove();
         } else if (command.equals("f")) {
@@ -108,7 +109,7 @@ public class ScheduleApp {
     private void setCal() {
         System.out.println("Please type in the number you want to reach:");
         int amount = input.nextInt();
-        p.setCalories(amount);
+        person.setCalories(amount);
         System.out.println("Congrats, I wish you luck on reaching this caloric goal!");
     }
 
@@ -117,7 +118,7 @@ public class ScheduleApp {
     private void setTime() {
         System.out.println("Please type in the time you want to work out everyday (in minutes)");
         int amount = input.nextInt();
-        p.setTime(amount);
+        person.setTime(amount);
         System.out.println("Thank you, I will organize your schedule accordingly!");
     }
 
@@ -134,9 +135,8 @@ public class ScheduleApp {
         
     }
 
-     //MODIFIES: this
+    //MODIFIES: this
     // EFFECTS: add an exercise to a day in the list
-    @SuppressWarnings("methodlength")
     private void addExercise() {
         System.out.println("Here are your current type days set, add exercises accordingly to only these days.");
         printTypeDay();
@@ -154,22 +154,22 @@ public class ScheduleApp {
             System.out.println("How many reps will you do? (integer values)");
             int reps = input.nextInt();
             if (sched.validDay(day).getType().equals("leg")) {
-                if (time*reps <= p.getTime()) { 
+                if (time * reps <= person.getTime()) { 
                     LegExercise leg = new LegExercise(name, time, cals, reps);
                     sched.validDay(day).addExercise(leg);
-                    p.setTime(p.getTime() - time*reps);
-                    currentCalories += reps*cals;
+                    person.setTime(person.getTime() - time * reps);
+                    currentCalories += reps * cals;
                     System.out.println("workout added!");
                 } else {
                     System.out.println("You do not have enough time for this exercise!");
                 }
                 
             } else if (sched.validDay(day).getType().equals("arm")) {
-                if (time*reps <= p.getTime()) { 
+                if (time * reps <= person.getTime()) { 
                     ArmExercise arm = new ArmExercise(name, time, cals, reps);
                     sched.validDay(day).addExercise(arm);
-                    p.setTime(p.getTime() - time*reps);
-                    currentCalories += reps*cals;
+                    person.setTime(person.getTime() - time * reps);
+                    currentCalories += reps * cals;
                     System.out.println("workout added!");
                 } else {
                     System.out.println("You do not have enough time for this exercise!");
@@ -184,7 +184,6 @@ public class ScheduleApp {
 
     //MODIFIES: Day
     // EFFECTS: remove an exercise from the list and update the current calories and time
-    @SuppressWarnings("methodlength")
     private void remove() {
         System.out.println("Do you want to remove one or clear exercises for a day?");
         System.out.println("c -> clear");
@@ -200,7 +199,7 @@ public class ScheduleApp {
             ArrayList<Integer> temp = sched.clearExercise(day);
             if (temp.get(0) != 0) { 
                 currentCalories -= temp.get(0);
-                p.setTime(p.getTime() + temp.get(1));
+                person.setTime(person.getTime() + temp.get(1));
             }
             
         } else if (c.equals("r")) {
@@ -213,7 +212,7 @@ public class ScheduleApp {
             ArrayList<Integer> temp = sched.removeExercise(day, name);
             if (temp.get(0) != 0) {
                 currentCalories -= temp.get(0);
-                p.setTime(p.getTime() + temp.get(1));
+                person.setTime(person.getTime() + temp.get(1));
             }
             
         } else {
@@ -222,21 +221,21 @@ public class ScheduleApp {
     }
 
     public void printTypeDay() {
-        ArrayList<String> temp = sched.TypeDay();
+        ArrayList<String> temp = sched.typeDay();
         for (String s : temp) {
             System.out.println(s);
         }
     }
 
     //EFFECTS: prints out the schedule
-    @SuppressWarnings("methodlength")
     public void printSched(int currentCalories, int targetCalories, int timeLeft) {
-        System.out.printf("Target Calories: %10d   |   Current Calories: %10d  |   Time Remaining: %10d\n\n\n", targetCalories, currentCalories, timeLeft);
+        System.out.printf("Target Calories: %10d   |   Current Calories: %10d  |   Time Remaining: %10d\n\n\n",
+                            targetCalories, currentCalories, timeLeft);
         System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s |\n",
                         "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
         System.out.println("--------------------------------------------------------------------------------------");
         System.out.print("|");
-        ArrayList<String> types = sched.Type();
+        ArrayList<String> types = sched.type();
         for (String s : types) {
             System.out.printf(" %-10s |", s);
         }

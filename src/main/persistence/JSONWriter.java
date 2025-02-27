@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.io.*;
 //CITATION: CODE MODELED FROM JSONSERIALIZATION DEMO
 // Represents a writer that writes JSON representation of WeeklySchedule to file
+
 public class JSONWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
