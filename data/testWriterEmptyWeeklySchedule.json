@@ -18,6 +18,7 @@
         []
     ],
     "person": {
+        "currentCalories": 0,
         "name": "Angela",
         "time": 0,
         "targetCalories": 0

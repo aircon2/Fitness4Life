@@ -18,7 +18,6 @@ public class ScheduleApp {
     private Person person;
     private WeeklySchedule sched;
     private Scanner input;
-    private int currentCalories;
 
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
@@ -52,12 +51,11 @@ public class ScheduleApp {
     // MODIFIES: this
     // EFFECTS: initializes person 
     public void init() {
-        person = new Person("Angela", 0, 0);
+        person = new Person("Angela", 0, 0, 0);
         sched = new WeeklySchedule("Angela", person);
         input = new Scanner(System.in);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
-        currentCalories = 0;
     }
 
     // EFFECTS: displays menu of input needed from user
@@ -85,15 +83,15 @@ public class ScheduleApp {
         } else if (command.equals("d")) {
             setType();
         } else if (command.equals("c")) {
-            printSched(currentCalories, person.getTargetCalories(), person.getTime());
+            printSched();
         } else if (command.equals("e")) {
             addExercise();
         } else if (command.equals("r")) {
             remove();
         } else if (command.equals("f")) {
-            saveWorkRoom();
+            saveWeeklySchedule();
         } else if (command.equals("l")) {
-            loadWorkRoom();
+            loadWeeklySchedule();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -105,7 +103,7 @@ public class ScheduleApp {
     private void setCal() {
         System.out.println("Please type in the number you want to reach:");
         int amount = input.nextInt();
-        person.setCalories(amount);
+        person.setTargetCalories(amount);
         System.out.println("Congrats, I wish you luck on reaching this caloric goal!");
     }
 
@@ -154,7 +152,7 @@ public class ScheduleApp {
                     LegExercise leg = new LegExercise(name, time, cals, reps);
                     sched.validDay(day).addExercise(leg);
                     person.setTime(person.getTime() - time * reps);
-                    currentCalories += reps * cals;
+                    person.addCurrentCalories(reps * cals);
                     System.out.println("workout added!");
                 } else {
                     System.out.println("You do not have enough time for this exercise!");
@@ -165,7 +163,7 @@ public class ScheduleApp {
                     ArmExercise arm = new ArmExercise(name, time, cals, reps);
                     sched.validDay(day).addExercise(arm);
                     person.setTime(person.getTime() - time * reps);
-                    currentCalories += reps * cals;
+                    person.addCurrentCalories(reps * cals);
                     System.out.println("workout added!");
                 } else {
                     System.out.println("You do not have enough time for this exercise!");
@@ -194,7 +192,7 @@ public class ScheduleApp {
 
             ArrayList<Integer> temp = sched.clearExercise(day);
             if (temp.get(0) != 0) { 
-                currentCalories -= temp.get(0);
+                person.substractCurrentCalories(temp.get(0));
                 person.setTime(person.getTime() + temp.get(1));
             }
             
@@ -207,7 +205,7 @@ public class ScheduleApp {
             String name = input.nextLine();
             ArrayList<Integer> temp = sched.removeExercise(day, name);
             if (temp.get(0) != 0) {
-                currentCalories -= temp.get(0);
+                person.substractCurrentCalories(temp.get(0));
                 person.setTime(person.getTime() + temp.get(1));
             }
             
@@ -224,9 +222,9 @@ public class ScheduleApp {
     }
 
     //EFFECTS: prints out the schedule
-    public void printSched(int currentCalories, int targetCalories, int timeLeft) {
+    public void printSched() {
         System.out.printf("Target Calories: %10d   |   Current Calories: %10d  |   Time Remaining: %10d\n\n\n",
-                            targetCalories, currentCalories, timeLeft);
+                            person.getTargetCalories(), person.getCurrentCalories(), person.getTime());
         System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s |\n",
                         "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
         System.out.println("--------------------------------------------------------------------------------------");
@@ -256,10 +254,10 @@ public class ScheduleApp {
     }
 
     // EFFECTS: saves the WeeklySchedule to file
-    private void saveWorkRoom() {
+    private void saveWeeklySchedule() {
         try {
             jsonWriter.open();
-            jsonWriter.write(sched);
+            jsonWriter.write(sched, person);
             jsonWriter.close();
             System.out.println("Saved " + sched.getName() + " to " + JSON_STORE);
         } catch (FileNotFoundException e) {
@@ -269,9 +267,10 @@ public class ScheduleApp {
 
     // MODIFIES: this
     // EFFECTS: loads WeeklySchedule from file
-    private void loadWorkRoom() {
+    private void loadWeeklySchedule() {
         try {
-            sched = jsonReader.read();
+            sched = jsonReader.readWS();
+            person = jsonReader.readP();
             System.out.println("Loaded " + sched.getName() + " from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);

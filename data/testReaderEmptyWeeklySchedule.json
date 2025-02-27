@@ -2,7 +2,8 @@
     "person": {
         "name": "Angela",
         "targetCalories": 0,
-        "time": 0
+        "time": 0,
+        "currentCalories": 0
     },
     "types":[
         "",

@@ -8,13 +8,15 @@ import persistence.Writable;
 public class Person implements Writable {
     private String name;
     private int targetCalories;
+    private int currentCalories;
     private int time;
 
     // create a new person with a name and target calories, time for exercises, and empty weekly schedule
-    public Person(String name, int targetCalories, int time) {
+    public Person(String name, int targetCalories, int time, int currentCalories) {
         this.name = name;
         this.targetCalories = targetCalories;
         this.time = time;
+        this.currentCalories = currentCalories;
     }
 
 
@@ -35,15 +37,35 @@ public class Person implements Writable {
     // REQUIRES: calories >= 0
     // MODIFIES: this
     // EFFECTS: Set the calories target for the person
-    public void setCalories(int calories) {
+    public void setTargetCalories(int calories) {
         this.targetCalories = calories;
     }
 
     // REQUIRES: calories >= 0
     // MODIFIES: this
     // EFFECTS: Add to the calories target for the person
-    public void addCalories(int calories) {
+    public void addTargetCalories(int calories) {
         targetCalories += calories;
+    }
+
+    // REQUIRES: calories >= 0
+    // MODIFIES: this
+    // EFFECTS: Add to the curernt calories for the person
+    public void addCurrentCalories(int calories) {
+        currentCalories += calories;
+    }
+
+    // REQUIRES: calories >= 0
+    // MODIFIES: this
+    // EFFECTS: substract to the curernt calories for the person
+    public void substractCurrentCalories(int calories) {
+        currentCalories -= calories;
+    }
+
+
+    // EFFECTS: get the curernt calories for the person
+    public int getCurrentCalories() {
+        return currentCalories;
     }
 
     //EFFECTS: return the name of the person
@@ -56,7 +78,7 @@ public class Person implements Writable {
         return time;
     }
 
-     //EFFECTS: return the caloric target of the person
+    //EFFECTS: return the caloric target of the person
     public int getTargetCalories() {
         return targetCalories;
     }
@@ -68,6 +90,7 @@ public class Person implements Writable {
         json.put("name", name);
         json.put("targetCalories", targetCalories);
         json.put("time", time);
+        json.put("currentCalories", currentCalories);
         return json;
     }
 

@@ -1,6 +1,5 @@
 package persistence;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -18,8 +17,14 @@ import java.util.ArrayList;
     void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("./data/noSuchFile.json");
         try {
-            WeeklySchedule ws = reader.read();
+            WeeklySchedule ws = reader.readWS();
+            Person person = reader.readP();
             fail("IOException expected");
+            assertEquals("Angela", person.getName());
+            assertEquals(0, person.getTargetCalories());
+            assertEquals(0, person.getTime());
+            assertEquals(0, person.getCurrentCalories());
+            assertEquals("My ws", ws.getName());
         } catch (IOException e) {
             // pass
         }
@@ -29,12 +34,14 @@ import java.util.ArrayList;
     void testReaderEmptyWeeklySchedule() {
         JsonReader reader = new JsonReader("./data/testReaderEmptyWeeklySchedule.json");
         try {
-            WeeklySchedule ws = reader.read();
+            WeeklySchedule ws = reader.readWS();
+            Person person = reader.readP();
             assertEquals("My ws", ws.getName());
             ArrayList<String> types = ws.type();
-            assertEquals("Angela", ws.getPerson().getName());
-            assertEquals(0, ws.getPerson().getTargetCalories());
-            assertEquals(0, ws.getPerson().getTime());
+            assertEquals("Angela", person.getName());
+            assertEquals(0, person.getTargetCalories());
+            assertEquals(0, person.getTime());
+            assertEquals(0, person.getCurrentCalories());
             assertTrue(!types.isEmpty());
             assertEquals(7, ws.allExercises().size());
         } catch (IOException e) {
@@ -46,12 +53,13 @@ import java.util.ArrayList;
     void testReaderGeneralWeeklySchedule() {
         JsonReader reader = new JsonReader("./data/testReaderGeneralWeeklySchedule.json");
         try {
-            WeeklySchedule ws = reader.read();
+            WeeklySchedule ws = reader.readWS();
             assertEquals("My ws", ws.getName());
-            Person person = ws.getPerson();
+            Person person = reader.readP();
             assertEquals("John Doe", person.getName());
             assertEquals(2000, person.getTargetCalories());
             assertEquals(60, person.getTime());
+            assertEquals(60, person.getCurrentCalories());
 
             ArrayList<String> types = ws.type();
             assertEquals(7, types.size());

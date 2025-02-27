@@ -9,12 +9,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PersonTest {
     private Person test;
-    private  WeeklySchedule schedule;
-    
+   
     @BeforeEach
     void runBefore() {
-        test = new Person("Angela", 100, 0);
-        schedule = new WeeklySchedule("Angela", test);
+        test = new Person("Angela", 100, 0, 0);
     }
 
     @Test
@@ -39,17 +37,17 @@ public class PersonTest {
 
     @Test
     void testSetCaloriesBurned() {
-        test.setCalories(200);
+        test.setTargetCalories(200);
         assertEquals(200, test.getTargetCalories());
     }
 
     @Test
     void testAddCaloriesBurned() {
-        test.addCalories(0);
+        test.addTargetCalories(0);
         assertEquals(100, test.getTargetCalories());
-        test.addCalories(100);
+        test.addTargetCalories(100);
         assertEquals(200, test.getTargetCalories());
-        test.addCalories(2);
+        test.addTargetCalories(2);
         assertEquals(202, test.getTargetCalories());
     }
 

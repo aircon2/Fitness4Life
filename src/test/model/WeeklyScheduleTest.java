@@ -11,7 +11,7 @@ public class WeeklyScheduleTest {
 
     @BeforeEach
     void runBefore() {
-        weeklySchedule = new WeeklySchedule("ws", new Person("nice", 0, 0)); 
+        weeklySchedule = new WeeklySchedule("ws", new Person("nice", 0, 0, 0)); 
 
     }
 

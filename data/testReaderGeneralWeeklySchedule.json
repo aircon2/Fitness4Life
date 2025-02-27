@@ -2,7 +2,8 @@
     "person": {
         "name": "John Doe",
         "targetCalories": 2000,
-        "time": 60
+        "time": 60,
+        "currentCalories": 60
     },
     "types": ["arm", "", "", "leg", "", "", ""],
     "exercises": [

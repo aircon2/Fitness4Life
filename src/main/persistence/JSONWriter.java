@@ -1,5 +1,6 @@
 package persistence;
 
+import model.Person;
 import model.WeeklySchedule;
 import org.json.JSONObject;
 
@@ -26,9 +27,10 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
-    public void write(WeeklySchedule ws) {
+    // EFFECTS: writes JSON representation of weeklySchedule to file
+    public void write(WeeklySchedule ws, Person p) {
         JSONObject json = ws.toJson();
+        json.put("person", p.toJson());
         saveToFile(json.toString(TAB));
     }
 

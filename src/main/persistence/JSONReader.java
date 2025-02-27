@@ -26,10 +26,19 @@ public class JsonReader {
 
     // EFFECTS: gets WeeklySchedule from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public WeeklySchedule read() throws IOException {
+    public WeeklySchedule readWS() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseWeeklySchedule(jsonObject);
+    }
+
+    // EFFECTS: gets Person from file and returns it;
+    // throws IOException if an error occurs reading data from file
+    public Person readP() throws IOException {
+        String jsonData = readFile(source);
+        JSONObject jsonObject = new JSONObject(jsonData);
+        JSONObject personJson = jsonObject.getJSONObject("person");
+        return parsePerson(personJson);
     }
 
     // EFFECTS: reads source file as string and returns it
@@ -48,7 +57,8 @@ public class JsonReader {
         String name = jsonObject.getString("name");
         int targetCalories = jsonObject.getInt("targetCalories");
         int time = jsonObject.getInt("time");
-        Person person = new Person(name, targetCalories, time);
+        int currentCalories = jsonObject.getInt("currentCalories");
+        Person person = new Person(name, targetCalories, time, currentCalories);
         return person;
     }
 
@@ -76,7 +86,7 @@ public class JsonReader {
     }
 
     // MODIFIES: ws
-    // EFFECTS: parses exercises from JSON object and adds them to workroom
+    // EFFECTS: parses exercises from JSON object and adds them to WeeklySchedule
     private void addExercises(WeeklySchedule ws, JSONObject jsonObject) {
         JSONArray outerArray = jsonObject.getJSONArray("exercises");
     
