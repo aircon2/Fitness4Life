@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import persistence.Writable;
 
-// weekly schedule to keep track of workouts
+// weekly schedule to keep track of exercises
 public class WeeklySchedule implements Writable {
     protected ArrayList<Day> schedule;
     protected String name;
@@ -140,13 +140,15 @@ public class WeeklySchedule implements Writable {
         for (Day d : schedule) {
             if (d.getName().equals(day)) {
                 List<Exercise> exercises = d.getExercisesForTheDay();
-                for (int i = 0; i < exercises.size(); i++) {
-                    int cals = exercises.get(i).getCaloriesBurned() *  exercises.get(i).getReps();
-                    int time = exercises.get(i).getTimeForExercise() *  exercises.get(i).getReps();
-                    exercises.remove(i);
-                    returns.add(cals);
-                    returns.add(time);
-                    return returns;
+                for (int i = exercises.size() - 1; i >= 0; i--) {
+                    if (exercises.get(i).getName().equals(name)) {
+                        int cals = exercises.get(i).getCaloriesBurned() * exercises.get(i).getReps();
+                        int time = exercises.get(i).getTimeForExercise() * exercises.get(i).getReps();
+                        exercises.remove(i);
+                        returns.add(cals);
+                        returns.add(time);
+                        return returns;  
+                    }
                 }
             }
         } 

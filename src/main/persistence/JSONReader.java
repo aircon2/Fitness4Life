@@ -2,6 +2,7 @@ package persistence;
 
 import model.Day;
 import model.Exercise;
+import model.LegExercise;
 import model.Person;
 import model.WeeklySchedule;
 import model.ArmExercise;
@@ -108,10 +109,14 @@ public class JsonReader {
         int reps = jsonObject.getInt("reps");
         int cals = jsonObject.getInt("cals");
         int time = jsonObject.getInt("time");
-        Exercise exercise = new ArmExercise(name, time, cals, reps);
+        Exercise exercise = new LegExercise(name, time, cals, reps);
+        if (ws.getSchedule().get(dayIndex).getType() ==  "arm") {
+            exercise = new ArmExercise(name, time, cals, reps);
+        }
         ws.getDay(day).addExercise(exercise);
     }
 
+    // EFFECTS: returns the day based on the index position of the array list 
     private String getDay(int dayIndex) {
         String temp = "";
         if (dayIndex == 0) {

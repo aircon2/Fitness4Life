@@ -13,6 +13,7 @@ import model.LegExercise;
 import model.Person;
 import model.WeeklySchedule;
 
+// UI design, displays options and takes in user input
 public class ScheduleApp {
     private static final String JSON_STORE = "./data/WeeklySchedule.json";
     private Person person;
@@ -138,41 +139,58 @@ public class ScheduleApp {
         String day = input.next();
         day = day.toLowerCase();
         if (sched.validDay(day) != null) {
-            input.nextLine();
-            System.out.println("Whats the name of the exercise?");
-            String name = input.nextLine();
-            System.out.println("How many calories will be burned? (integer values)");
-            int cals = input.nextInt();
-            System.out.println("How much time will one rep take? (integer values)");
-            int time = input.nextInt();
-            System.out.println("How many reps will you do? (integer values)");
-            int reps = input.nextInt();
-            if (sched.validDay(day).getType().equals("leg")) {
-                if (time * reps <= person.getTime()) { 
-                    LegExercise leg = new LegExercise(name, time, cals, reps);
-                    sched.validDay(day).addExercise(leg);
-                    person.setTime(person.getTime() - time * reps);
-                    person.addCurrentCalories(reps * cals);
-                    System.out.println("workout added!");
-                } else {
-                    System.out.println("You do not have enough time for this exercise!");
-                }
-                
-            } else if (sched.validDay(day).getType().equals("arm")) {
-                if (time * reps <= person.getTime()) { 
-                    ArmExercise arm = new ArmExercise(name, time, cals, reps);
-                    sched.validDay(day).addExercise(arm);
-                    person.setTime(person.getTime() - time * reps);
-                    person.addCurrentCalories(reps * cals);
-                    System.out.println("workout added!");
-                } else {
-                    System.out.println("You do not have enough time for this exercise!");
-                }
-            } else {
-                System.out.println("Invalid, couldn't add");
-            }
+            completeAdding(day);
         } else { 
             System.out.println("can't find that day"); 
+        }
+    }
+
+    //MODIFIES: this 
+    //EFFECTS: go through the steps of getting input and putting exercise into correct day
+    public void completeAdding(String day) {
+        input.nextLine();
+        System.out.println("Whats the name of the exercise?");
+        String name = input.nextLine();
+        System.out.println("How many calories will be burned? (integer values)");
+        int cals = input.nextInt();
+        System.out.println("How much time will one rep take? (integer values)");
+        int time = input.nextInt();
+        System.out.println("How many reps will you do? (integer values)");
+        int reps = input.nextInt();
+        if (sched.validDay(day).getType().equals("leg")) {
+            addLegExercise(name, cals, time, reps, day);
+        } else if (sched.validDay(day).getType().equals("arm")) {
+            addArmExercise(name, cals, time, reps, day);
+        } else {
+            System.out.println("Invalid, couldn't add");
+        }
+    }
+
+    //MODIFIES: this
+    //EFFECTS: adds leg exercise to specified day
+    public void addLegExercise(String name, int cals, int time, int reps, String day) {
+        if (time * reps <= person.getTime()) { 
+            LegExercise leg = new LegExercise(name, time, cals, reps);
+            sched.validDay(day).addExercise(leg);
+            person.setTime(person.getTime() - time * reps);
+            person.addCurrentCalories(reps * cals);
+            System.out.println("workout added!");
+        } else {
+            System.out.println("You do not have enough time for this exercise!");
+        }
+    }
+
+    //MODIFIES: this
+    //EFFECTS: adds arm exercise to specified day
+    public void addArmExercise(String name, int cals, int time, int reps, String day) {
+        if (time * reps <= person.getTime()) { 
+            ArmExercise arm = new ArmExercise(name, time, cals, reps);
+            sched.validDay(day).addExercise(arm);
+            person.setTime(person.getTime() - time * reps);
+            person.addCurrentCalories(reps * cals);
+            System.out.println("workout added!");
+        } else {
+            System.out.println("You do not have enough time for this exercise!");
         }
     }
 
@@ -184,36 +202,47 @@ public class ScheduleApp {
         System.out.println("r -> remove");
         String c = input.next();
         c = c.toLowerCase();
-
         if (c.equals("c")) {
-            System.out.println("Which day do you want to clear this exercise for?");
-            printTypeDay();
-            String day = input.next();
-
-            ArrayList<Integer> temp = sched.clearExercise(day);
-            if (temp.get(0) != 0) { 
-                person.substractCurrentCalories(temp.get(0));
-                person.setTime(person.getTime() + temp.get(1));
-            }
-            
+            clear();
         } else if (c.equals("r")) {
-            System.out.println("Which day do you want to remove this exercise for?");
-            printTypeDay();
-            String day = input.next();
-            input.nextLine();
-            System.out.println("Whats the name of the exercise? (case sensitive)");
-            String name = input.nextLine();
-            ArrayList<Integer> temp = sched.removeExercise(day, name);
-            if (temp.get(0) != 0) {
-                person.substractCurrentCalories(temp.get(0));
-                person.setTime(person.getTime() + temp.get(1));
-            }
-            
+            removeExercise();
         } else {
             System.out.println("Not a valid entry");
         }
     }
 
+    // MODIFIES: this 
+    //EFFECTS: clears the whole day of exercises
+    public void clear() {
+        System.out.println("Which day do you want to clear this exercise for?");
+        printTypeDay();
+        String day = input.next();
+        ArrayList<Integer> temp = sched.clearExercise(day);
+        if (temp.get(0) != 0) { 
+            person.substractCurrentCalories(temp.get(0));
+            person.setTime(person.getTime() + temp.get(1));
+        }
+            
+        
+    }
+
+    // MODIFIES: this 
+    //EFFECTS: removes an exercise for the day
+    public void removeExercise() {
+        System.out.println("Which day do you want to remove this exercise for?");
+        printTypeDay();
+        String day = input.next();
+        input.nextLine();
+        System.out.println("Whats the name of the exercise? (case sensitive)");
+        String name = input.nextLine();
+        ArrayList<Integer> temp = sched.removeExercise(day, name);
+        if (temp.get(0) != 0) {
+            person.substractCurrentCalories(temp.get(0));
+            person.setTime(person.getTime() + temp.get(1));
+        }
+    }
+
+    // EFFECTS: prints the type of day
     public void printTypeDay() {
         ArrayList<String> temp = sched.typeDay();
         for (String s : temp) {
@@ -235,22 +264,25 @@ public class ScheduleApp {
         }
         System.out.println(); 
         System.out.println("--------------------------------------------------------------------------------------");
-        
         int maxExercises = sched.maxExercises();
-        ArrayList<ArrayList<Exercise>> exercises = sched.allExercises();
+        printExercises(maxExercises);
+        System.out.println("--------------------------------------------------------------------------------------");
+    }
 
+    // EFFECTS: prints all exercises 
+    public void printExercises(int maxExercises) {
+        ArrayList<ArrayList<Exercise>> exercises = sched.allExercises();
         for (int i = 0; i < maxExercises; i++) {
             System.out.print("|");
-            for (int k = 0; k < exercises.size(); k++) { // Loop through days
-                if (i < exercises.get(k).size()) { // Ensure index is within bounds
+            for (int k = 0; k < exercises.size(); k++) { 
+                if (i < exercises.get(k).size()) { 
                     System.out.printf(" %-10s |", exercises.get(k).get(i).getName());
                 } else {
-                    System.out.printf(" %-10s |", ""); // Print empty if no exercise
+                    System.out.printf(" %-10s |", ""); 
                 }
             }
-            System.out.println(); // Move to the next row
+            System.out.println(); 
         }
-        System.out.println("--------------------------------------------------------------------------------------");
     }
 
     // EFFECTS: saves the WeeklySchedule to file
