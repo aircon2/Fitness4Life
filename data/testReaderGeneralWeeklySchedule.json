@@ -5,9 +5,16 @@
         "time": 60,
         "currentCalories": 60
     },
-    "types": ["arm", "", "", "leg", "", "", ""],
+    "types": ["arm", "arm", "leg", "leg", "arm", "arm", "arm"],
     "exercises": [
-        [],
+        [
+            {
+                "name": "push up",
+                "reps": 1,
+                "time": 3, 
+                "cals": 1
+            }
+        ],
         [
             {
                 "name": "squat",
@@ -36,9 +43,30 @@
                 "cals": 1
             }
         ],
-        [],
-        [],
-        [],
+        [
+            {
+                "name": "crunch",
+                "reps": 1,
+                "time": 3, 
+                "cals": 1
+            }
+        ],
+        [
+            {
+                "name": "nice",
+                "reps": 1,
+                "time": 3, 
+                "cals": 1
+            }
+        ],
+        [
+            {
+                "name": "try",
+                "reps": 1,
+                "time": 3, 
+                "cals": 1
+            }
+        ],
         [
             {
                 "name": "fight",

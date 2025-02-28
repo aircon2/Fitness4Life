@@ -64,5 +64,22 @@ public class PersonTest {
     }
 
 
+    @Test
+    void testAddCurrentCalories() {
+        test.addCurrentCalories(10);
+        assertEquals(10, test.getCurrentCalories());
+        test.addCurrentCalories(100);
+        assertEquals(110, test.getCurrentCalories());
+    }
+
+    @Test
+    void testSubstractCurrentCalories() {
+        test.addCurrentCalories(10);
+        test.substractCurrentCalories(10);
+        assertEquals(0, test.getCurrentCalories());
+        test.addCurrentCalories(100);
+        test.substractCurrentCalories(10);
+        assertEquals(90, test.getCurrentCalories());
+    }
 
 }

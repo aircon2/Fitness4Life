@@ -64,14 +64,6 @@ public class Day {
         return day;
     }
 
-
-    // EFFECTS: creates new JSON object
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json.put("exercises", exercisesToJson());
-        return json;
-    }
-
      // EFFECTS: returns exercises in this Day as a JSON array
     public JSONArray exercisesToJson() {
         JSONArray jsonArray = new JSONArray();
@@ -80,6 +72,4 @@ public class Day {
         } 
         return jsonArray;
     }
-
-
 }

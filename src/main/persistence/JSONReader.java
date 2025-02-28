@@ -76,10 +76,8 @@ public class JsonReader {
         int index = 0;
     
         for (Day d : ws.getSchedule()) {
-            if (index < typesArray.length()) {
-                String type = typesArray.getString(index);
-                d.setType(type);
-            }
+            String type = typesArray.getString(index);
+            d.setType(type);
             index++;
         }
         addExercises(ws, jsonObject);
@@ -131,11 +129,9 @@ public class JsonReader {
             temp = "friday";
         } else if (dayIndex == 5) {
             temp = "saturday";
-        } else if (dayIndex == 6) {
-            temp = "sunday";
         } else {
-            temp = "monday";
-        }
+            temp = "sunday";
+        } 
 
         return temp;
 

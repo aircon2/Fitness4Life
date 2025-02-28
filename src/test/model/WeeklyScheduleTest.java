@@ -18,6 +18,7 @@ public class WeeklyScheduleTest {
     @Test
     void testGetName(){
         assertEquals("ws", weeklySchedule.getName());
+        assertEquals("nice", weeklySchedule.getPerson().getName());
     }
 
     @Test
@@ -76,9 +77,7 @@ public class WeeklyScheduleTest {
         Day monday = weeklySchedule.getDay("monday");
         Exercise exercise = new ArmExercise("Push-ups", 100, 10, 1);
         monday.addExercise(exercise);
-    
         ArrayList<Integer> result = weeklySchedule.removeExercise("monday", "Push-ups");
-        
         assertEquals(10, result.get(0)); 
         assertEquals(0, monday.getExercisesForTheDay().size());
     }
@@ -87,8 +86,12 @@ public class WeeklyScheduleTest {
    
     @Test
     void testRemoveExerciseNotFound() {
-        ArrayList<Integer> result = weeklySchedule.removeExercise("monday", "Push-ups");
-        assertEquals(0, result.get(0)); 
+        ArrayList<Integer> result = weeklySchedule.removeExercise("monday", "NA");
+        assertEquals(0, result.get(0));
+        Day monday = weeklySchedule.getDay("monday");
+        monday.addExercise(new ArmExercise("Jumping Jacks", 50, 5, 10)); 
+        assertEquals(1, result.size());
+        assertEquals(0, result.get(0));  
     }
 
     

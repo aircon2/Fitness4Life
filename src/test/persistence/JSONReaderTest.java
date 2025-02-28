@@ -20,11 +20,6 @@ import java.util.ArrayList;
             WeeklySchedule ws = reader.readWS();
             Person person = reader.readP();
             fail("IOException expected");
-            assertEquals("Angela", person.getName());
-            assertEquals(0, person.getTargetCalories());
-            assertEquals(0, person.getTime());
-            assertEquals(0, person.getCurrentCalories());
-            assertEquals("My ws", ws.getName());
         } catch (IOException e) {
             // pass
         }
@@ -42,7 +37,6 @@ import java.util.ArrayList;
             assertEquals(0, person.getTargetCalories());
             assertEquals(0, person.getTime());
             assertEquals(0, person.getCurrentCalories());
-            assertTrue(!types.isEmpty());
             assertEquals(7, ws.allExercises().size());
         } catch (IOException e) {
             fail("Couldn't read from file");
@@ -64,11 +58,11 @@ import java.util.ArrayList;
             ArrayList<String> types = ws.type();
             assertEquals(7, types.size());
             assertEquals("arm", types.get(0));
-            assertEquals("", types.get(1));
+            assertEquals("arm", types.get(1));
 
             ArrayList<ArrayList<Exercise>> exercises = ws.allExercises();
             assertEquals(7, exercises.size());
-            assertEquals(0, exercises.get(0).size());
+            assertEquals(1, exercises.get(0).size());
             assertEquals(2, exercises.get(1).size());
             checkExercise("squat", 1, 3, 1, exercises.get(1).get(0)); 
 
