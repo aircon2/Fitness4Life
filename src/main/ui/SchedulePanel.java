@@ -1,5 +1,7 @@
 package ui;
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +32,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
     private JLabel label, target, current, time;
     private JPanel statsPanel, statsButtonPanel;
     private JMenuBar menuBar;
-    private JButton submitButton, quitButton, loadButton, startButton, setTargetButton, seeSheduleButton, setTimeButton;
+    private JButton submitButton, quitButton, loadButton, startButton, setTargetButton, seeScheduleButton, setTimeButton;
     
     public SchedulePanel() {
         // Create the welcome label
@@ -117,11 +119,12 @@ public class SchedulePanel extends JFrame implements ActionListener {
             }
         });
 
-        seeSheduleButton = new JButton("See Schedule");
-        seeSheduleButton.addActionListener(new ActionListener() {
+        seeScheduleButton = new JButton("See Schedule");
+        seeScheduleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //printSched();
+                start.dispose();
+                printSched();
             }
         });
 
@@ -129,6 +132,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         setTimeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                start.dispose();
                 setTime();
             }
         });
@@ -136,7 +140,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         statsButtonPanel = new JPanel();
         statsButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); 
         statsButtonPanel.add(setTargetButton);
-        statsButtonPanel.add(seeSheduleButton);
+        statsButtonPanel.add(seeScheduleButton);
         statsButtonPanel.add(setTimeButton);
 
         menuBar = new JMenuBar();
@@ -144,8 +148,32 @@ public class SchedulePanel extends JFrame implements ActionListener {
         menuBar.add(actions);
 
         JMenuItem addType = new JMenuItem("Add a Type of Day");
+        addType.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                start.dispose();
+                setType();
+            }
+        });
+
         JMenuItem addExercise = new JMenuItem("Add an Exercise");
+        addExercise.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                start.dispose();
+                addExercise();
+            }
+        });
+
         JMenuItem removeExercise = new JMenuItem("Remove Exercises");
+        removeExercise.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                start.dispose();
+                //TODO: choose();
+            }
+        });
+
         actions.add(addType);
         actions.add(addExercise);
         actions.add(removeExercise);
@@ -155,6 +183,17 @@ public class SchedulePanel extends JFrame implements ActionListener {
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); 
         buttonPanel.add(saveButton);
 
+         
+        // Add to the new frame
+        start.setJMenuBar(menuBar);
+        start.add(label, BorderLayout.CENTER);
+        start.add(buttonPanel, BorderLayout.SOUTH);
+        start.add(printStatsBar(), BorderLayout.NORTH);
+        start.add(statsButtonPanel);
+        start.setVisible(true);
+    }
+
+    public JPanel printStatsBar() {
         // Create the target calories label
         target = new JLabel("Target Calories: ");
         target.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -185,7 +224,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         currentField.setText(Integer.toString(person.getCurrentCalories()));
         timeField.setText(Integer.toString(person.getTime()));
 
-         // Create a panel for the stats labels and fields
+        // Create a panel for the stats labels and fields
         statsPanel = new JPanel();
         statsPanel.setBackground(Color.pink);
         statsPanel.setLayout(new GridLayout(1, 6, 10, 10)); 
@@ -196,13 +235,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         statsPanel.add(time);
         statsPanel.add(timeField);
          
-        // Add to the new frame
-        start.setJMenuBar(menuBar);
-        start.add(label, BorderLayout.CENTER);
-        start.add(buttonPanel, BorderLayout.SOUTH);
-        start.add(statsPanel, BorderLayout.NORTH);
-        start.add(statsButtonPanel);
-        start.setVisible(true);
+        return statsPanel;
     }
 
     @Override
@@ -240,113 +273,199 @@ public class SchedulePanel extends JFrame implements ActionListener {
     //MODIFIES: person
     // Set the amount of time you want to workout for each session
     private void setTime() {
-        System.out.println("Please type in the time you want to work out every week (in minutes)");
-        int amount = input.nextInt();
-        person.setTime(amount);
-        System.out.println("Thank you, I will organize your schedule accordingly!");
+        JFrame setTime = new JFrame();
+        setTime.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTime.setSize(700, 200);
+        setTime.setLayout(new BorderLayout());
+
+        JLabel enterJLabel = new JLabel("Please type in the time you want to work out every week (in minutes)");
+        JTextField textField = new JTextField(20);
+        JButton submit = new JButton("Submit");
+        submit.addActionListener(e -> {
+            String amount = textField.getText();
+            person.setTime(Integer.parseInt(amount));
+            startFresh();
+            setTime.dispose();
+        });
+       
+       
+        setTime.add(enterJLabel, BorderLayout.NORTH);
+        setTime.add(textField, BorderLayout.CENTER);
+        setTime.add(submit, BorderLayout.SOUTH);
+        setTime.setVisible(true);
+    } 
+
+    //MODIFIES: Day
+    // EFFECTS: set type of day - arm or leg
+    private void setType() {
+        JFrame setType = new JFrame();
+        setType.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setType.setSize(700, 200);
+        setType.setLayout(new FlowLayout());
+
+        JLabel enterJLabel = new JLabel("Which day of the week do you want to set?");
+        JTextField textField = new JTextField(20);
+        JLabel typeLabel = new JLabel("Please type which day this is, arm or leg day?");
+        JTextField textField2 = new JTextField(20);
+        JButton submit = new JButton("Submit");
+        submit.addActionListener(e -> {
+            String day = textField.getText();
+            day = day.toLowerCase();
+            String type = textField2.getText();
+            type  = type.toLowerCase();
+            sched.setType(day, type);
+            startFresh();
+            setType.dispose();
+        });
+        setType.add(enterJLabel);
+        setType.add(textField);
+        setType.add(typeLabel);
+        setType.add(textField2);
+        setType.add(submit);
+        setType.setVisible(true);
     }
 
-    //     // MODIFIES: this
-    //     // EFFECTS: processes user command
-    //     private void processCommand(String command) {
-    //         if (command.equals("s")) {
-    //             setCal();
-    //         } else if (command.equals("t")) {
-    //             setTime();
-    //         } else if (command.equals("d")) {
-    //             setType();
-    //         } else if (command.equals("c")) {
-    //             printSched();
-    //         } else if (command.equals("e")) {
-    //             addExercise();
-    //         } else if (command.equals("r")) {
-    //             remove();
-    //         } else if (command.equals("f")) {
-    //             saveWeeklySchedule();
-    //         } else if (command.equals("l")) {
-    //             loadWeeklySchedule();
-    //         } else {
-    //             System.out.println("Selection not valid...");
-    //         }
-         
-    //     
+    //MODIFIES: this
+    // EFFECTS: add an exercise to a day in the list
+    private void addExercise() {
+        JFrame addExercise = new JFrame("Add a new exercise!");
+        addExercise.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addExercise.setSize(900, 200);
+        addExercise.setLayout(new BorderLayout());
 
-//     //MODIFIES: Day
-//     // EFFECTS: set type of day - arm or leg
-//     private void setType() {
-//         System.out.println("Which day of the week do you want to set?");
-//         String day = input.next();
-//         day = day.toLowerCase();
-//         System.out.println("Please type which day this is, arm or leg day?");
-//         String type = input.next();
-//         type  = type.toLowerCase();
-//         sched.setType(day, type);
+        JPanel display = new JPanel();
+        JLabel enterJLabel = new JLabel("Here is the days you can add exercises for: ");
+        JTextArea types = new JTextArea();
+        types.setEditable(false);
+        types.setText(String.join("\n", sched.typeDay())); 
+        display.setLayout(new FlowLayout(FlowLayout.CENTER));
+        display.add(enterJLabel);
+        display.add(types);
+
+
+        JPanel input = new JPanel();
+        JLabel typeLabel = new JLabel("Which day do you want to set?");
+        JTextField textField = new JTextField(10);
+        JButton submit = new JButton("Submit");
+        input.setLayout(new FlowLayout(FlowLayout.CENTER));
+        input.add(typeLabel);
+        input.add(textField);
+        input.add(submit);
+       
+       
+        submit.addActionListener(e -> {
+            String day = textField.getText();
+            day = day.toLowerCase();
+            if (sched.validDay(day) != null) {
+                completeAdding(day);
+            } else {
+                startFresh();
+            }
+            addExercise.dispose();
+        });
+
         
-//     }
+        addExercise.add(display, BorderLayout.WEST);
+        addExercise.add(input, BorderLayout.EAST);
+        addExercise.setVisible(true);
+        
+    }
 
-//     //MODIFIES: this
-//     // EFFECTS: add an exercise to a day in the list
-//     private void addExercise() {
-//         System.out.println("Here are your current type days set, add exercises accordingly to only these days.");
-//         printTypeDay();
-//         System.out.println("Which day of the week do you want to set it for?");
-//         String day = input.next();
-//         day = day.toLowerCase();
-//         if (sched.validDay(day) != null) {
-//             completeAdding(day);
-//         } else { 
-//             System.out.println("can't find that day"); 
-//         }
-//     }
+    //MODIFIES: this 
+    //EFFECTS: go through the steps of getting input and putting exercise into correct day
+    public void completeAdding(String day) {
+        JFrame addExerciseStats = new JFrame();
+        addExerciseStats.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addExerciseStats.setSize(700, 200);
+        addExerciseStats.setLayout(new FlowLayout());
 
-//     //MODIFIES: this 
-//     //EFFECTS: go through the steps of getting input and putting exercise into correct day
-//     public void completeAdding(String day) {
-//         input.nextLine();
-//         System.out.println("Whats the name of the exercise?");
-//         String name = input.nextLine();
-//         System.out.println("How many calories will be burned? (integer values)");
-//         int cals = input.nextInt();
-//         System.out.println("How much time will one rep take? (integer values)");
-//         int time = input.nextInt();
-//         System.out.println("How many reps will you do? (integer values)");
-//         int reps = input.nextInt();
-//         if (sched.validDay(day).getType().equals("leg")) {
-//             addLegExercise(name, cals, time, reps, day);
-//         } else if (sched.validDay(day).getType().equals("arm")) {
-//             addArmExercise(name, cals, time, reps, day);
-//         } else {
-//             System.out.println("Invalid, couldn't add");
-//         }
-//     }
+        JLabel name = new JLabel("Whats the name of the exercise?");
+        JTextField textField = new JTextField(20);
+        JLabel calBurned = new JLabel("How many calories will be burned? (integer values)");
+        JTextField textField2 = new JTextField(20);
+        JLabel time = new JLabel("How much time will one rep take? (integer values)");
+        JTextField textField3 = new JTextField(20);
+        JLabel reps = new JLabel("How many reps will you do? (integer values)");
+        JTextField textField4 = new JTextField(20);
 
-//     //MODIFIES: this
-//     //EFFECTS: adds leg exercise to specified day
-//     public void addLegExercise(String name, int cals, int time, int reps, String day) {
-//         if (time * reps <= person.getTime()) { 
-//             LegExercise leg = new LegExercise(name, time, cals, reps);
-//             sched.validDay(day).addExercise(leg);
-//             person.setTime(person.getTime() - time * reps);
-//             person.addCurrentCalories(reps * cals);
-//             System.out.println("workout added!");
-//         } else {
-//             System.out.println("You do not have enough time for this exercise!");
-//         }
-//     }
+        JButton submit = new JButton("Submit");
+        submit.addActionListener(e -> {
+            String name1 = textField.getText();
+            int cals = Integer.parseInt(textField2.getText());
+            int time1 = Integer.parseInt(textField3.getText());
+            int reps1 = Integer.parseInt(textField4.getText());
+            
 
-//     //MODIFIES: this
-//     //EFFECTS: adds arm exercise to specified day
-//     public void addArmExercise(String name, int cals, int time, int reps, String day) {
-//         if (time * reps <= person.getTime()) { 
-//             ArmExercise arm = new ArmExercise(name, time, cals, reps);
-//             sched.validDay(day).addExercise(arm);
-//             person.setTime(person.getTime() - time * reps);
-//             person.addCurrentCalories(reps * cals);
-//             System.out.println("workout added!");
-//         } else {
-//             System.out.println("You do not have enough time for this exercise!");
-//         }
-//     }
+            if (sched.validDay(day).getType().equals("leg")) {
+                result(addLegExercise(name1, cals, time1, reps1, day));
+            } else if (sched.validDay(day).getType().equals("arm")) {
+                result(addArmExercise(name1, cals, time1, reps1, day));
+            } else {
+                startFresh();
+            }
+            addExerciseStats.dispose();
+        });
+
+        addExerciseStats.add(name);
+        addExerciseStats.add(textField);
+        addExerciseStats.add(calBurned);
+        addExerciseStats.add(textField2);
+        addExerciseStats.add(time);
+        addExerciseStats.add(textField3);
+        addExerciseStats.add(reps);
+        addExerciseStats.add(textField4);
+        addExerciseStats.add(submit);
+        addExerciseStats.setVisible(true);
+    }
+
+    public void result(String r) {
+        JFrame result = new JFrame();
+        result.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        result.setSize(700, 200);
+        result.setLayout(new FlowLayout());
+
+        JLabel message = new JLabel(r);
+
+        JButton returnHome = new JButton("Click Here to Return Home");
+        returnHome.addActionListener(e -> {
+            result.dispose();
+            startFresh();
+        });
+
+        result.add(message);
+        result.add(returnHome);
+        result.setVisible(true);
+    
+    }
+    
+
+    //MODIFIES: this
+    //EFFECTS: adds leg exercise to specified day
+    public String addLegExercise(String name, int cals, int time, int reps, String day) {
+        if (time * reps <= person.getTime()) { 
+            LegExercise leg = new LegExercise(name, time, cals, reps);
+            sched.validDay(day).addExercise(leg);
+            person.setTime(person.getTime() - time * reps);
+            person.addCurrentCalories(reps * cals);
+            return "workout added!";
+        } else {
+             return "You do not have enough time for this exercise!";
+        }
+    }
+
+    //MODIFIES: this
+    //EFFECTS: adds arm exercise to specified day
+    public String addArmExercise(String name, int cals, int time, int reps, String day) {
+        if (time * reps <= person.getTime()) { 
+            ArmExercise arm = new ArmExercise(name, time, cals, reps);
+            sched.validDay(day).addExercise(arm);
+            person.setTime(person.getTime() - time * reps);
+            person.addCurrentCalories(reps * cals);
+            return "workout added!";
+        } else {
+            return "You do not have enough time for this exercise!";
+        }
+    }
 
 //     //MODIFIES: Day
 //     // EFFECTS: remove an exercise from the list and update the current calories and time
@@ -396,48 +515,55 @@ public class SchedulePanel extends JFrame implements ActionListener {
 //         }
 //     }
 
-//     // EFFECTS: prints the type of day
-//     public void printTypeDay() {
-//         ArrayList<String> temp = sched.typeDay();
-//         for (String s : temp) {
-//             System.out.println(s);
-//         }
-//     }
 
-//     //EFFECTS: prints out the schedule
-//     public void printSched() {
-//         System.out.printf("Target Calories: %10d   |   Current Calories: %10d  |   Time Remaining: %10d\n\n\n",
-//                             person.getTargetCalories(), person.getCurrentCalories(), person.getTime());
-//         System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s |\n",
-//                         "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
-//         System.out.println("--------------------------------------------------------------------------------------");
-//         System.out.print("|");
-//         ArrayList<String> types = sched.type();
-//         for (String s : types) {
-//             System.out.printf(" %-10s |", s);
-//         }
-//         System.out.println(); 
-//         System.out.println("--------------------------------------------------------------------------------------");
-//         int maxExercises = sched.maxExercises();
-//         printExercises(maxExercises);
-//         System.out.println("--------------------------------------------------------------------------------------");
-//     }
+    //EFFECTS: prints out the schedule
+    public void printSched() {
+        ArrayList<ArrayList<Exercise>> exercises = sched.allExercises();
+        int maxExercises = sched.maxExercises();
 
-//     // EFFECTS: prints all exercises 
-//     public void printExercises(int maxExercises) {
-//         ArrayList<ArrayList<Exercise>> exercises = sched.allExercises();
-//         for (int i = 0; i < maxExercises; i++) {
-//             System.out.print("|");
-//             for (int k = 0; k < exercises.size(); k++) { 
-//                 if (i < exercises.get(k).size()) { 
-//                     System.out.printf(" %-10s |", exercises.get(k).get(i).getName());
-//                 } else {
-//                     System.out.printf(" %-10s |", ""); 
-//                 }
-//             }
-//             System.out.println(); 
-//         }
-//     }
+        JFrame tableFrame = new JFrame(person.getName() + "'s Weekly Schedule");
+        tableFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        tableFrame.setSize(800, 500);
+       
+        String[] columnNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+        ArrayList<String> types = sched.type();
+        Object[][] tableData = new Object[maxExercises + 1][7];
+
+        for (int i = 0; i < 7; i++) {
+            tableData[0][i] = types.get(i); 
+        }
+    
+        // Add exercises to the table data
+        for (int i = 0; i < maxExercises; i++) {
+            for (int j = 0; j < 7; j++) {
+                if (i < exercises.get(j).size()) {
+                    tableData[i + 1][j] = exercises.get(j).get(i).getName(); 
+                } else {
+                    tableData[i + 1][j] = ""; 
+                }
+            }
+        }
+    
+
+        JButton returnHome = new JButton("Click Here to Return Home");
+        returnHome.addActionListener(e -> {
+            tableFrame.dispose();
+            startFresh();
+        });
+
+        JTable table = new JTable(tableData, columnNames);
+        tableFrame.setLayout(new BorderLayout());
+        tableFrame.add(printStatsBar(), BorderLayout.NORTH);
+        tableFrame.add(new JScrollPane(table), BorderLayout.CENTER);
+        tableFrame.add(returnHome, BorderLayout.SOUTH);
+        JScrollPane scrollPane = new JScrollPane(table);
+        tableFrame.add(scrollPane, BorderLayout.CENTER);
+        
+        tableFrame.setVisible(true);
+        
+        
+        
+    }
 
 //     // EFFECTS: saves the WeeklySchedule to file
 //     private void saveWeeklySchedule() {
