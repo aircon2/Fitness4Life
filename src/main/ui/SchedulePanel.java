@@ -25,51 +25,19 @@ public class SchedulePanel extends JFrame implements ActionListener {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private JTextArea displayArea;
-    private JTextField targetField, currentField, timeField;
-    private JButton submitButton, quitButton, loadButton, startButton;
+    private JTextField targetField, currentField, timeField; 
+    private JFrame frame, start;
+    private JLabel label, target, current, time;
+    private JPanel statsPanel, statsButtonPanel;
+    private JMenuBar menuBar;
+    private JButton submitButton, quitButton, loadButton, startButton, setTargetButton, seeSheduleButton, setTimeButton;
     
     public SchedulePanel() {
         // Create the welcome label
-        JLabel label = new JLabel("Welcome!");
+        label = new JLabel("Welcome!");
         label.setFont(new Font("Arial", Font.PLAIN, 30));
         label.setHorizontalAlignment(JLabel.CENTER);
-
-        // Create the target calories label
-        JLabel target = new JLabel("Target Calories: ");
-        target.setFont(new Font("Arial", Font.PLAIN, 15));
-        target.setHorizontalAlignment(JLabel.LEFT);
-
-        // Create the current calories label
-        JLabel current = new JLabel("Current Calories: ");
-        current.setFont(new Font("Arial", Font.PLAIN, 15));
-        current.setHorizontalAlignment(JLabel.CENTER);
-
-        // Create the weekly time label
-        JLabel time = new JLabel("Weekly Time: ");
-        time.setFont(new Font("Arial", Font.PLAIN, 15));
-        time.setHorizontalAlignment(JLabel.RIGHT);
-
-        // Create text fields for values (integer display)
-        targetField = new JTextField("0", 5);
-        targetField.setEditable(false);  
-        targetField.setBackground(Color.pink);
-        currentField = new JTextField("0", 5);
-        currentField.setEditable(false);
-        currentField.setBackground(Color.pink);
-        timeField = new JTextField("0", 5);
-        timeField.setEditable(false);
-        timeField.setBackground(Color.pink);
-        
-        // Create a panel for the stats labels and fields
-        JPanel statsPanel = new JPanel();
-        statsPanel.setBackground(Color.pink);
-        statsPanel.setLayout(new GridLayout(1, 6, 10, 10)); 
-        statsPanel.add(target);
-        statsPanel.add(targetField);
-        statsPanel.add(current);
-        statsPanel.add(currentField);
-        statsPanel.add(time);
-        statsPanel.add(timeField);
+       
 
         // Create the "Load from File" button
         loadButton = new JButton("Load from File");
@@ -86,8 +54,9 @@ public class SchedulePanel extends JFrame implements ActionListener {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Add functionality to start a new session
-                JOptionPane.showMessageDialog(null, "Start New button clicked!");
+                init();
+                frame.dispose();
+                startFresh();
             }
         });
 
@@ -99,7 +68,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         
 
         // Create the main frame
-        JFrame frame = new JFrame("Fitness Weekly Schedule");
+        frame = new JFrame("Fitness Weekly Schedule");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(700, 800);
         frame.setLayout(new BorderLayout());
@@ -107,23 +76,8 @@ public class SchedulePanel extends JFrame implements ActionListener {
         // Add the welcome label to the center of the frame
         frame.add(label, BorderLayout.CENTER);
         frame.add(buttonPanel, BorderLayout.SOUTH);
-
-        // Add the stats panel to the top of the frame
-        frame.add(statsPanel, BorderLayout.NORTH);
-
         frame.setVisible(true);
-            
-        // Initialize Schedule
-        init();
      }
-
-     // Centres frame on desktop
-	// modifies: this
-	// effects:  location of frame is set so frame is centred on desktop
-	private void centreOnScreen() {
-		Dimension scrn = Toolkit.getDefaultToolkit().getScreenSize();
-		setLocation((scrn.width - getWidth()) / 2, (scrn.height - getHeight()) / 2);
-	}
 
     public void processCommand(String command) {
         displayArea.append("Command: " + command + "\n");
@@ -139,110 +93,183 @@ public class SchedulePanel extends JFrame implements ActionListener {
         jsonReader = new JsonReader(JSON_STORE);
     }
 
+    public void startFresh() {
+        start = new JFrame("Fitness Weekly Schedule");
+        start.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        start.setSize(700, 800);
+        start.setLayout(new BorderLayout());
+
+        // Create the "Start New" button
+        JButton saveButton = new JButton("Save to file");
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //yay
+            }
+        });
+
+        setTargetButton = new JButton("Set new Target");
+        setTargetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                start.dispose();
+                setCal();
+            }
+        });
+
+        seeSheduleButton = new JButton("See Schedule");
+        seeSheduleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //printSched();
+            }
+        });
+
+        setTimeButton = new JButton("Set Time");
+        setTimeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setTime();
+            }
+        });
+
+        statsButtonPanel = new JPanel();
+        statsButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); 
+        statsButtonPanel.add(setTargetButton);
+        statsButtonPanel.add(seeSheduleButton);
+        statsButtonPanel.add(setTimeButton);
+
+        menuBar = new JMenuBar();
+        JMenu actions = new JMenu("Actions");
+        menuBar.add(actions);
+
+        JMenuItem addType = new JMenuItem("Add a Type of Day");
+        JMenuItem addExercise = new JMenuItem("Add an Exercise");
+        JMenuItem removeExercise = new JMenuItem("Remove Exercises");
+        actions.add(addType);
+        actions.add(addExercise);
+        actions.add(removeExercise);
+
+        // Create a panel for the buttons
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); 
+        buttonPanel.add(saveButton);
+
+        // Create the target calories label
+        target = new JLabel("Target Calories: ");
+        target.setFont(new Font("Arial", Font.PLAIN, 15));
+        target.setHorizontalAlignment(JLabel.LEFT);
+
+        // Create the current calories label
+        current = new JLabel("Current Calories: ");
+        current.setFont(new Font("Arial", Font.PLAIN, 15));
+        current.setHorizontalAlignment(JLabel.CENTER);
+
+        // Create the weekly time label
+        time = new JLabel("Weekly Time: ");
+        time.setFont(new Font("Arial", Font.PLAIN, 15));
+        time.setHorizontalAlignment(JLabel.RIGHT);
+
+        // Create text fields for values (integer display)
+        targetField = new JTextField(Integer.toString(person.getTargetCalories()), 5);
+        targetField.setEditable(false);  
+        targetField.setBackground(Color.pink);
+        currentField = new JTextField(Integer.toString(person.getCurrentCalories()), 5);
+        currentField.setEditable(false);
+        currentField.setBackground(Color.pink);
+        timeField = new JTextField(Integer.toString(person.getTime()), 5);
+        timeField.setEditable(false);
+        timeField.setBackground(Color.pink);
+
+        targetField.setText(Integer.toString(person.getTargetCalories()));
+        currentField.setText(Integer.toString(person.getCurrentCalories()));
+        timeField.setText(Integer.toString(person.getTime()));
+
+         // Create a panel for the stats labels and fields
+        statsPanel = new JPanel();
+        statsPanel.setBackground(Color.pink);
+        statsPanel.setLayout(new GridLayout(1, 6, 10, 10)); 
+        statsPanel.add(target);
+        statsPanel.add(targetField);
+        statsPanel.add(current);
+        statsPanel.add(currentField);
+        statsPanel.add(time);
+        statsPanel.add(timeField);
+         
+        // Add to the new frame
+        start.setJMenuBar(menuBar);
+        start.add(label, BorderLayout.CENTER);
+        start.add(buttonPanel, BorderLayout.SOUTH);
+        start.add(statsPanel, BorderLayout.NORTH);
+        start.add(statsButtonPanel);
+        start.setVisible(true);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
-    /*
-	 * A key handler to respond to key events
-	 */
-	// private class KeyHandler extends KeyAdapter {
-	// 	@Override
-	// 	public void keyPressed(KeyEvent e) {
-	// 		game.keyPressed(e.getKeyCode());
-	// 	}
-	// }
-            
-
-      
-    
-}
 
 
-//     public ScheduleApp() throws FileNotFoundException {
-//         runSchedule();
-//     }
+    //MODIFIES: person
+    // EFFECTS: set the caloric target
+    private void setCal() {
+        JFrame setCalories = new JFrame();
+        setCalories.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setCalories.setSize(700, 200);
+        setCalories.setLayout(new BorderLayout());
 
-//     // MODIFIES: this
-//     // EFFECTS: processes user input
-//     private void runSchedule() {
-//         boolean keepGoing = true;
-//         String command = null;
-        
-//         init();
-//         while (keepGoing) {
-//             displayMenu();
-//             command = input.next();
-//             command = command.toLowerCase();
+        JLabel enterJLabel = new JLabel("Please type in the number you want to reach:");
+        JTextField textField = new JTextField(20);
+        JButton submit = new JButton("Submit");
+        submit.addActionListener(e -> {
+            String amount = textField.getText();
+            person.setTargetCalories(Integer.parseInt(amount));
+            startFresh();
+            setCalories.dispose();
+        });
+       
+       
+        setCalories.add(enterJLabel, BorderLayout.NORTH);
+        setCalories.add(textField, BorderLayout.CENTER);
+        setCalories.add(submit, BorderLayout.SOUTH);
+        setCalories.setVisible(true);
 
-//             if (command.equals("q")) {
-//                 keepGoing = false;
-//             } else {
-//                 processCommand(command);
-//             }
-//         }
+    }
 
-//     }
+    //MODIFIES: person
+    // Set the amount of time you want to workout for each session
+    private void setTime() {
+        System.out.println("Please type in the time you want to work out every week (in minutes)");
+        int amount = input.nextInt();
+        person.setTime(amount);
+        System.out.println("Thank you, I will organize your schedule accordingly!");
+    }
 
-    
-
-//     // EFFECTS: displays menu of input needed from user
-//     private void displayMenu() {
-//         System.out.println("Welcome to your personal weekly workout schedule!"
-//                             + "Please complete the steps below in order!");
-//         System.out.println("1. s -> set new caloric target");
-//         System.out.println("2. t -> set total time you want to workout for the week");
-//         System.out.println("3. d -> set type of day");
-//         System.out.println("4. e -> add an exercise");
-//         System.out.println("5. c -> see current schedule");
-//         System.out.println("6. r -> remove or clear exercise");
-//         System.out.println("7. f -> save work room to file");
-//         System.out.println("8. l -> load work room from file");
-//         System.out.println("9. q -> quit");
-//     }
-
-//     // MODIFIES: this
-//     // EFFECTS: processes user command
-//     private void processCommand(String command) {
-//         if (command.equals("s")) {
-//             setCal();
-//         } else if (command.equals("t")) {
-//             setTime();
-//         } else if (command.equals("d")) {
-//             setType();
-//         } else if (command.equals("c")) {
-//             printSched();
-//         } else if (command.equals("e")) {
-//             addExercise();
-//         } else if (command.equals("r")) {
-//             remove();
-//         } else if (command.equals("f")) {
-//             saveWeeklySchedule();
-//         } else if (command.equals("l")) {
-//             loadWeeklySchedule();
-//         } else {
-//             System.out.println("Selection not valid...");
-//         }
-     
-//     }
-
-//     //MODIFIES: person
-//     // EFFECTS: set the caloric target
-//     private void setCal() {
-//         System.out.println("Please type in the number you want to reach:");
-//         int amount = input.nextInt();
-//         person.setTargetCalories(amount);
-//         System.out.println("Congrats, I wish you luck on reaching this caloric goal!");
-//     }
-
-//     //MODIFIES: person
-//     // Set the amount of time you want to workout for each session
-//     private void setTime() {
-//         System.out.println("Please type in the time you want to work out every week (in minutes)");
-//         int amount = input.nextInt();
-//         person.setTime(amount);
-//         System.out.println("Thank you, I will organize your schedule accordingly!");
-//     }
+    //     // MODIFIES: this
+    //     // EFFECTS: processes user command
+    //     private void processCommand(String command) {
+    //         if (command.equals("s")) {
+    //             setCal();
+    //         } else if (command.equals("t")) {
+    //             setTime();
+    //         } else if (command.equals("d")) {
+    //             setType();
+    //         } else if (command.equals("c")) {
+    //             printSched();
+    //         } else if (command.equals("e")) {
+    //             addExercise();
+    //         } else if (command.equals("r")) {
+    //             remove();
+    //         } else if (command.equals("f")) {
+    //             saveWeeklySchedule();
+    //         } else if (command.equals("l")) {
+    //             loadWeeklySchedule();
+    //         } else {
+    //             System.out.println("Selection not valid...");
+    //         }
+         
+    //     
 
 //     //MODIFIES: Day
 //     // EFFECTS: set type of day - arm or leg
@@ -438,3 +465,4 @@ public class SchedulePanel extends JFrame implements ActionListener {
 
 // }
 
+}
