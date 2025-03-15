@@ -2,7 +2,7 @@
     "types": [
         "",
         "",
-        "leg",
+        "",
         "",
         "",
         "",
@@ -11,30 +11,17 @@
     "exercises": [
         [],
         [],
-        [
-            {
-                "reps": 1,
-                "name": "wjeb",
-                "time": 1,
-                "cals": 10
-            },
-            {
-                "reps": 1,
-                "name": "wejb",
-                "time": 1,
-                "cals": 10
-            }
-        ],
+        [],
         [],
         [],
         [],
         []
     ],
     "person": {
-        "currentCalories": 20,
+        "currentCalories": 0,
         "name": "Angela",
-        "time": 8,
-        "targetCalories": 100
+        "time": 0,
+        "targetCalories": 0
     },
     "name": "Angela"
 }

@@ -43,12 +43,9 @@ public class SchedulePanel extends JFrame implements ActionListener {
 
         // Create the "Load from File" button
         loadButton = new JButton("Load from File");
-        loadButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Add functionality to load data from a file
-                JOptionPane.showMessageDialog(null, "Load from File button clicked!");
-            }
+        loadButton.addActionListener(e -> {
+            loadWeeklySchedule();
+            startFresh();
         });
 
         // Create the "Start New" button
@@ -64,7 +61,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
 
         // Create a panel for the buttons
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); // Use FlowLayout to center the buttons
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); 
         buttonPanel.add(loadButton);
         buttonPanel.add(startButton);
         
@@ -106,7 +103,8 @@ public class SchedulePanel extends JFrame implements ActionListener {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //yay
+                saveWeeklySchedule();
+                startFresh();
             }
         });
 
@@ -170,7 +168,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 start.dispose();
-                //TODO: choose();
+                choose();
             }
         });
 
@@ -191,6 +189,32 @@ public class SchedulePanel extends JFrame implements ActionListener {
         start.add(printStatsBar(), BorderLayout.NORTH);
         start.add(statsButtonPanel);
         start.setVisible(true);
+    }
+
+    public void choose() {  
+        JFrame chooseFrame = new JFrame();
+        chooseFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        chooseFrame.setSize(700, 200);
+        chooseFrame.setLayout(new FlowLayout());
+
+        JLabel enterJLabel = new JLabel("Do you want to clear a whole day or remove an exercise?");
+        JButton remove = new JButton("Remove");
+        remove.addActionListener(e -> {
+            chooseFrame.dispose();
+            removeExercise();
+        });
+        JButton clear = new JButton("Clear");
+        clear.addActionListener(e -> {
+            chooseFrame.dispose();
+            clear();
+        });
+       
+       
+        chooseFrame.add(enterJLabel);
+        chooseFrame.add(remove);
+        chooseFrame.add(clear);
+        chooseFrame.setVisible(true);
+
     }
 
     public JPanel printStatsBar() {
@@ -467,57 +491,144 @@ public class SchedulePanel extends JFrame implements ActionListener {
         }
     }
 
-//     //MODIFIES: Day
-//     // EFFECTS: remove an exercise from the list and update the current calories and time
-//     private void remove() {
-//         System.out.println("Do you want to remove one or clear exercises for a day?");
-//         System.out.println("c -> clear");
-//         System.out.println("r -> remove");
-//         String c = input.next();
-//         c = c.toLowerCase();
-//         if (c.equals("c")) {
-//             clear();
-//         } else if (c.equals("r")) {
-//             removeExercise();
-//         } else {
-//             System.out.println("Not a valid entry");
-//         }
-//     }
+    // MODIFIES: this 
+    //EFFECTS: clears the whole day of exercises
+    public void clear() {
+        JFrame clearFrame = new JFrame();
+        clearFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        clearFrame.setSize(900, 200);
+        clearFrame.setLayout(new BorderLayout());
 
-//     // MODIFIES: this 
-//     //EFFECTS: clears the whole day of exercises
-//     public void clear() {
-//         System.out.println("Which day do you want to clear this exercise for?");
-//         printTypeDay();
-//         String day = input.next();
-//         ArrayList<Integer> temp = sched.clearExercise(day);
-//         if (temp.get(0) != 0) { 
-//             person.substractCurrentCalories(temp.get(0));
-//             person.setTime(person.getTime() + temp.get(1));
-//         }
-            
+        JPanel display = new JPanel();
+        JLabel enterJLabel = new JLabel("Here are the current days with exercises");
+        JTextArea types = new JTextArea();
+        types.setEditable(false);
+        types.setText(String.join("\n", sched.typeDay())); 
+        display.setLayout(new FlowLayout(FlowLayout.CENTER));
+        display.add(enterJLabel);
+        display.add(types);
+
+
+        JPanel input = new JPanel();
+        JLabel typeLabel = new JLabel("Which day do you want to clear this exercise for?");
+        JTextField textField = new JTextField(10);
+        JButton submit = new JButton("Submit");
+        input.setLayout(new FlowLayout(FlowLayout.CENTER));
+        input.add(typeLabel);
+        input.add(textField);
+        input.add(submit);
+       
+        submit.addActionListener(e -> {
+            String day = textField.getText();
+            day = day.toLowerCase();
+            ArrayList<Integer> temp = sched.clearExercise(day);
+            if (temp.get(0) != 0) { 
+                person.substractCurrentCalories(temp.get(0));
+                person.setTime(person.getTime() + temp.get(1));
+            }
+            clearFrame.dispose();
+            startFresh();
+        });
+
         
-//     }
+        clearFrame.add(display, BorderLayout.WEST);
+        clearFrame.add(input, BorderLayout.EAST);
+        clearFrame.setVisible(true);     
+        
+    }
 
-//     // MODIFIES: this 
-//     //EFFECTS: removes an exercise for the day
-//     public void removeExercise() {
-//         System.out.println("Which day do you want to remove this exercise for?");
-//         printTypeDay();
-//         String day = input.next();
-//         input.nextLine();
-//         System.out.println("Whats the name of the exercise? (case sensitive)");
-//         String name = input.nextLine();
-//         ArrayList<Integer> temp = sched.removeExercise(day, name);
-//         if (temp.get(0) != 0) {
-//             person.substractCurrentCalories(temp.get(0));
-//             person.setTime(person.getTime() + temp.get(1));
-//         }
-//     }
+    // MODIFIES: this 
+    //EFFECTS: removes an exercise for the day
+    public void removeExercise() {
+        JFrame removeFrame = new JFrame();
+        removeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        removeFrame.setSize(800, 200);
+        removeFrame.setLayout(new BorderLayout());
+
+        JPanel display = new JPanel();
+        JLabel enterJLabel = new JLabel("Here are the current days that you can remove from");
+        JTextArea types = new JTextArea();
+        types.setEditable(false);
+        types.setText(String.join("\n", sched.typeDay())); 
+        display.setLayout(new BorderLayout());
+        display.add(enterJLabel, BorderLayout.NORTH);
+        display.add(types, BorderLayout.CENTER);
+
+
+        JPanel input = new JPanel();
+        JLabel typeLabel = new JLabel("Which day do you want to remove this exercise for?");
+        JTextField textField = new JTextField(10);
+        JButton submit = new JButton("Submit");
+        input.setLayout(new BorderLayout());
+        input.add(typeLabel, BorderLayout.NORTH);
+        input.add(textField, BorderLayout.CENTER);
+        input.add(submit, BorderLayout.SOUTH);
+       
+        submit.addActionListener(e -> {
+            String day = textField.getText();
+            day = day.toLowerCase();
+            removeFrame.dispose();
+            finishRemoveExercise(day);
+        });
+
+        
+        removeFrame.add(display, BorderLayout.WEST);
+        removeFrame.add(input, BorderLayout.EAST);
+        removeFrame.setVisible(true);     
+
+        
+        
+    }
+
+    public void finishRemoveExercise(String day) {
+        JFrame removeFrame = new JFrame();
+        removeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        removeFrame.setSize(700, 200);
+        removeFrame.setLayout(new BorderLayout());
+
+
+        JPanel display = new JPanel();
+        JLabel enterJLabel = new JLabel("Here are the current exercises that you can remove from");
+        JTextArea exercises = new JTextArea();
+        exercises.setEditable(false);
+        ArrayList<Exercise> exerciseList = sched.getDay(day).getExercisesForTheDay();
+        ArrayList<String> names = new ArrayList<>();
+        for (Exercise e :  exerciseList) {
+            names.add(e.getName());
+        }
+        exercises.setText(String.join("\n", names)); 
+        display.setLayout(new BorderLayout());
+        display.add(enterJLabel, BorderLayout.NORTH);
+        display.add(exercises, BorderLayout.CENTER);
+
+        JPanel input = new JPanel();
+        input.setLayout(new BorderLayout());
+        JLabel typeLabel = new JLabel("Whats the name of the exercise? (case sensitive)");
+        JTextField textField = new JTextField(10);
+        JButton submit = new JButton("Submit");
+        input.add(typeLabel, BorderLayout.NORTH);
+        input.add(textField, BorderLayout.CENTER);
+        input.add(submit, BorderLayout.SOUTH);
+        submit.addActionListener(e -> {
+            String name = textField.getText();
+            ArrayList<Integer> temp = sched.removeExercise(day, name);
+            if (temp.get(0) != 0) {
+                person.substractCurrentCalories(temp.get(0));
+                person.setTime(person.getTime() + temp.get(1));
+            }
+            removeFrame.dispose();
+            startFresh();
+        });
+
+        
+        removeFrame.add(display, BorderLayout.WEST);
+        removeFrame.add(input, BorderLayout.EAST);
+        removeFrame.setVisible(true);     
+    }
 
 
     //EFFECTS: prints out the schedule
-    public void printSched() {
+    public JFrame printSched() {
         ArrayList<ArrayList<Exercise>> exercises = sched.allExercises();
         int maxExercises = sched.maxExercises();
 
@@ -560,35 +671,30 @@ public class SchedulePanel extends JFrame implements ActionListener {
         tableFrame.add(scrollPane, BorderLayout.CENTER);
         
         tableFrame.setVisible(true);
-        
-        
-        
+        return tableFrame;
     }
 
-//     // EFFECTS: saves the WeeklySchedule to file
-//     private void saveWeeklySchedule() {
-//         try {
-//             jsonWriter.open();
-//             jsonWriter.write(sched, person);
-//             jsonWriter.close();
-//             System.out.println("Saved " + sched.getName() + " to " + JSON_STORE);
-//         } catch (FileNotFoundException e) {
-//             System.out.println("Unable to write to file: " + JSON_STORE);
-//         }
-//     }
+    // EFFECTS: saves the WeeklySchedule to file
+    private void saveWeeklySchedule() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(sched, person);
+            jsonWriter.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
 
-//     // MODIFIES: this
-//     // EFFECTS: loads WeeklySchedule from file
-//     private void loadWeeklySchedule() {
-//         try {
-//             sched = jsonReader.readWS();
-//             person = jsonReader.readP();
-//             System.out.println("Loaded " + sched.getName() + " from " + JSON_STORE);
-//         } catch (IOException e) {
-//             System.out.println("Unable to read from file: " + JSON_STORE);
-//         }
-//     }
-
-// }
+    // MODIFIES: this
+    // EFFECTS: loads WeeklySchedule from file
+    private void loadWeeklySchedule() {
+        try {
+            sched = jsonReader.readWS();
+            person = jsonReader.readP();
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
 
 }
+
