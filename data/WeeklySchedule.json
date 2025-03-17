@@ -2,7 +2,7 @@
     "types": [
         "",
         "",
-        "",
+        "arm",
         "",
         "",
         "",
@@ -20,8 +20,8 @@
     "person": {
         "currentCalories": 0,
         "name": "Angela",
-        "time": 0,
-        "targetCalories": 0
+        "time": 100,
+        "targetCalories": 100
     },
     "name": "Angela"
 }

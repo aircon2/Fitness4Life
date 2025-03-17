@@ -43,10 +43,15 @@ public class SchedulePanel extends JFrame implements ActionListener {
 
         // Create the "Load from File" button
         loadButton = new JButton("Load from File");
-        loadButton.addActionListener(e -> {
-            loadWeeklySchedule();
-            startFresh();
+        loadButton.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                init();
+                frame.dispose();
+                loadWeeklySchedule();
+            }
         });
+        
 
         // Create the "Start New" button
         startButton = new JButton("Start New");
@@ -76,6 +81,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         frame.add(label, BorderLayout.CENTER);
         frame.add(buttonPanel, BorderLayout.SOUTH);
         frame.setVisible(true);
+       
      }
 
     public void processCommand(String command) {
@@ -95,7 +101,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
     public void startFresh() {
         start = new JFrame("Fitness Weekly Schedule");
         start.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        start.setSize(700, 800);
+        start.setSize(800, 800);
         start.setLayout(new BorderLayout());
 
         // Create the "Start New" button
@@ -104,7 +110,6 @@ public class SchedulePanel extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 saveWeeklySchedule();
-                startFresh();
             }
         });
 
@@ -680,17 +685,19 @@ public class SchedulePanel extends JFrame implements ActionListener {
             jsonWriter.open();
             jsonWriter.write(sched, person);
             jsonWriter.close();
+            result("Saved!");
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
     }
 
-    // MODIFIES: this
+     // MODIFIES: this
     // EFFECTS: loads WeeklySchedule from file
     private void loadWeeklySchedule() {
         try {
             sched = jsonReader.readWS();
             person = jsonReader.readP();
+            startFresh();
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }

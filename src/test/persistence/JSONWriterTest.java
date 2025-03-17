@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class JSONWriterTest extends JSONTest{
+public class JsonWriterTest extends JsonTest{
     @Test
     void testWriterInvalidFile() {
         try {
