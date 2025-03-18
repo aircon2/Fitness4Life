@@ -1,9 +1,7 @@
 package model;
 
 import java.util.ArrayList;
-
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 // Day with name and type of day (arm or leg)
 public class Day {

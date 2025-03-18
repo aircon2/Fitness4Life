@@ -1,12 +1,10 @@
 package ui;
-import javax.swing.*;
-import javax.swing.border.Border;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Scanner;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 import java.io.FileNotFoundException;
@@ -22,17 +20,26 @@ public class SchedulePanel extends JFrame implements ActionListener {
     private static final String JSON_STORE = "./data/WeeklySchedule.json";
     private Person person;
     private WeeklySchedule sched;
-    private Scanner input;
-
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private JTextArea displayArea;
-    private JTextField targetField, currentField, timeField; 
-    private JFrame frame, start;
-    private JLabel label, target, current, time;
-    private JPanel statsPanel, statsButtonPanel;
+    private JTextField targetField;
+    private JTextField currentField;
+    private JTextField timeField; 
+    private JFrame frame;
+    private JFrame start;
+    private JLabel label;
+    private JLabel target;
+    private JLabel current;
+    private JLabel time;
+    private JPanel statsPanel;
+    private JPanel statsButtonPanel;
     private JMenuBar menuBar;
-    private JButton submitButton, quitButton, loadButton, startButton, setTargetButton, seeScheduleButton, setTimeButton;
+    private JButton loadButton;
+    private JButton startButton;
+    private JButton setTargetButton;
+    private JButton seeScheduleButton;
+    private JButton setTimeButton;
     
     public SchedulePanel() {
         // Create the welcome label
@@ -43,7 +50,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
 
         // Create the "Load from File" button
         loadButton = new JButton("Load from File");
-        loadButton.addActionListener( new ActionListener() {
+        loadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 init();
@@ -82,7 +89,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         frame.add(buttonPanel, BorderLayout.SOUTH);
         frame.setVisible(true);
        
-     }
+    }
 
     public void processCommand(String command) {
         displayArea.append("Command: " + command + "\n");
@@ -93,7 +100,6 @@ public class SchedulePanel extends JFrame implements ActionListener {
     public void init() {
         person = new Person("Angela", 0, 0, 0);
         sched = new WeeklySchedule("Angela", person);
-        input = new Scanner(System.in);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
     }
@@ -478,7 +484,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
             person.addCurrentCalories(reps * cals);
             return "workout added!";
         } else {
-             return "You do not have enough time for this exercise!";
+            return "You do not have enough time for this exercise!";
         }
     }
 

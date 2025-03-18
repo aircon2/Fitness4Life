@@ -1,6 +1,5 @@
 package persistence;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import model.Exercise;
@@ -32,7 +31,6 @@ import java.util.ArrayList;
             WeeklySchedule ws = reader.readWS();
             Person person = reader.readP();
             assertEquals("My ws", ws.getName());
-            ArrayList<String> types = ws.type();
             assertEquals("Angela", person.getName());
             assertEquals(0, person.getTargetCalories());
             assertEquals(0, person.getTime());
