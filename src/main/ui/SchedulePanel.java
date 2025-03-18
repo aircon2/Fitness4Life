@@ -115,6 +115,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                start.dispose();
                 saveWeeklySchedule();
             }
         });
@@ -293,8 +294,8 @@ public class SchedulePanel extends JFrame implements ActionListener {
         submit.addActionListener(e -> {
             String amount = textField.getText();
             person.setTargetCalories(Integer.parseInt(amount));
-            startFresh();
             setCalories.dispose();
+            startFresh();
         });
        
        
@@ -319,8 +320,8 @@ public class SchedulePanel extends JFrame implements ActionListener {
         submit.addActionListener(e -> {
             String amount = textField.getText();
             person.setTime(Integer.parseInt(amount));
-            startFresh();
             setTime.dispose();
+            startFresh();
         });
        
        
@@ -349,8 +350,8 @@ public class SchedulePanel extends JFrame implements ActionListener {
             String type = textField2.getText();
             type  = type.toLowerCase();
             sched.setType(day, type);
-            startFresh();
             setType.dispose();
+            startFresh();
         });
         setType.add(enterJLabel);
         setType.add(textField);
