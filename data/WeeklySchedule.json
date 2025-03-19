@@ -3,9 +3,9 @@
         "",
         "",
         "",
+        "arm",
         "",
-        "",
-        "",
+        "arm",
         ""
     ],
     "exercises": [
@@ -14,14 +14,19 @@
         [],
         [],
         [],
-        [],
+        [{
+            "reps": 1,
+            "name": "jk",
+            "time": 10,
+            "cals": 10
+        }],
         []
     ],
     "person": {
-        "currentCalories": 0,
+        "currentCalories": 10,
         "name": "Angela",
-        "time": 100,
-        "targetCalories": 100
+        "time": 992,
+        "targetCalories": 1000
     },
     "name": "Angela"
 }
