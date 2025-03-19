@@ -25,3 +25,10 @@ The target audience is adults and young adults who put off going to the gym. If 
 - As a user, I want to have the option to save my weekly schedule to file
 - As a user, I want to be able to be able to load my weekly schedule from file
 
+# Instructions for End User
+
+- You can generate the first required action related to the user story "adding multiple Xs to a Y" by pressing Actions in the top left corner then clicking "add an exercise", after that you can follow the instructions to add an exercise to the weekly planner. If you want to add multiple, keep repeating this process. 
+- You can generate the second required action related to the user story "adding multiple Xs to a Y" by...
+- You can locate my visual component by...
+- You can save the state of my application by pressing the "Save to File" button at the bottom of the user screen.
+- You can reload the state of my application by pressing "Load from file" at the very beginning of the program. After you saved it, you can rerun the program and click this button again for updated changes.
