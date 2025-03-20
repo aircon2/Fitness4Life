@@ -754,7 +754,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         int maxExercises = sched.maxExercises();
         setNewTable();
        
-        String[] columnNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+        String[] columnNames = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
         ArrayList<String> types = sched.type();
         Object[][] tableData = new Object[maxExercises + 1][7];
 
@@ -788,8 +788,8 @@ public class SchedulePanel extends JFrame implements ActionListener {
     public void finishNewTable() {
         tableFrame.setLayout(new BorderLayout());
         tableFrame.add(printStatsBar(), BorderLayout.NORTH);
-        tableFrame.add(new JScrollPane(table), BorderLayout.CENTER);
         tableFrame.add(returnHome, BorderLayout.SOUTH);
+        tableFrame.add(new JScrollPane(table), BorderLayout.CENTER);
         tableFrame.setVisible(true);
     }
 

@@ -2,7 +2,7 @@
     "types": [
         "",
         "",
-        "",
+        "arm",
         "arm",
         "",
         "arm",
@@ -14,18 +14,26 @@
         [],
         [],
         [],
-        [{
-            "reps": 1,
-            "name": "jk",
-            "time": 10,
-            "cals": 10
-        }],
+        [
+            {
+                "reps": 1,
+                "name": "jk",
+                "time": 10,
+                "cals": 10
+            },
+            {
+                "reps": 1,
+                "name": "a",
+                "time": 1,
+                "cals": 1
+            }
+        ],
         []
     ],
     "person": {
-        "currentCalories": 10,
+        "currentCalories": 11,
         "name": "Angela",
-        "time": 200000,
+        "time": 199999,
         "targetCalories": 1000
     },
     "name": "Angela"
