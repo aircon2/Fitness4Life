@@ -443,6 +443,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         setType.setVisible(true);
     }
 
+    //REQUIRES: type of day is established
     //MODIFIES: this
     // EFFECTS: add an exercise to a day in the list
     private void addExercise() {
@@ -564,7 +565,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
     
     }
     
-
+    //REQUIRES: type of day is already established
     //MODIFIES: this
     //EFFECTS: adds leg exercise to specified day
     public String addLegExercise(String name, int cals, int time, int reps, String day) {
@@ -593,6 +594,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         }
     }
 
+    //REQUIRES: there are current exercises for the day 
     // MODIFIES: this 
     //EFFECTS: clears the whole day of exercises
     public void clear() {
@@ -641,6 +643,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
 
     }
 
+    //REQUIRES: there are current exercises for the day 
     // MODIFIES: this 
     //EFFECTS: removes an exercise for the day
     public void removeExercise() {
