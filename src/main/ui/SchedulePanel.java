@@ -9,13 +9,13 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import model.ArmExercise;
 import model.Exercise;
 import model.LegExercise;
 import model.Person;
 import model.WeeklySchedule;
 
+// GUI design, displays options and takes in user actions
 public class SchedulePanel extends JFrame implements ActionListener {
     private static final String JSON_STORE = "./data/WeeklySchedule.json";
     private Person person;
@@ -27,6 +27,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
     private JTextField targetField;
     private JTextField currentField;
     private JTextField timeField; 
+    private ImageIcon image;
     private JFrame frame;
     private JFrame addExercise;
     private JFrame tableFrame;
@@ -45,6 +46,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
     private JPanel statsButtonPanel;
     private JMenuBar menuBar;
     private JButton loadButton;
+    private JButton motivationButton;
     private JButton submit;
     private JButton returnHome;
     private JButton startButton;
@@ -59,6 +61,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
     private JMenuItem addTypeItem;
     private JMenuItem removeExerciseItem;
     
+    // EFFECTS: Initialization, choose how to start
     public SchedulePanel() {
         label = new JLabel("Welcome!");
         label.setFont(new Font("Arial", Font.PLAIN, 30));
@@ -77,6 +80,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         frame.setVisible(true);
     }
 
+    //EFFECTS: Creates a button panel for selection
     public void createButtonPanel() {
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); 
@@ -84,6 +88,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         buttonPanel.add(startButton);
     }
 
+    //EFFECTS: Creates a load button to load from file
     public void createLoadButton() {
         loadButton = new JButton("Load from File");
         loadButton.addActionListener(new ActionListener() {
@@ -96,6 +101,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         });
     }
 
+    //EFFECTS: Creates a start button to begin a new planner
     public void createStartButton() {
         startButton = new JButton("Start New");
         startButton.addActionListener(new ActionListener() {
@@ -108,9 +114,6 @@ public class SchedulePanel extends JFrame implements ActionListener {
         });
     }
 
-    public void processCommand(String command) {
-        displayArea.append("Command: " + command + "\n");
-    }
 
      // MODIFIES: this
     // EFFECTS: initializes person 
@@ -121,6 +124,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         jsonReader = new JsonReader(JSON_STORE);
     }
 
+    // EFFECTS: Main screen where all actions are performed
     public void startFresh() {
         startNewFrame();
         saveButton();
@@ -129,6 +133,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         setTimeButton();
         statsButtonPanel();
         menuBar();
+        motivationButton();
 
         actions.add(addTypeItem);
         actions.add(addExerciseItem);
@@ -137,7 +142,8 @@ public class SchedulePanel extends JFrame implements ActionListener {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); 
         buttonPanel.add(saveButton);
-
+        buttonPanel.add(motivationButton);
+       
         start.setJMenuBar(menuBar);
         start.add(label, BorderLayout.CENTER);
         start.add(buttonPanel, BorderLayout.SOUTH);
@@ -146,6 +152,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         start.setVisible(true);
     }
 
+    //EFFECTS: menu bar that creates selection actions 
     public void menuBar() {
         menuBar = new JMenuBar();
         actions = new JMenu("Actions");
@@ -172,6 +179,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
 
     }
 
+    //EFFECTS: Creates a frame where panels are put onto
     public void startNewFrame() {
         start = new JFrame("Fitness Weekly Schedule");
         start.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -179,6 +187,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         start.setLayout(new BorderLayout());
     }
 
+    //EFFECTS: saves current data to JSON 
     public void saveButton() {
         saveButton = new JButton("Save to file");
         saveButton.addActionListener(new ActionListener() {
@@ -190,6 +199,19 @@ public class SchedulePanel extends JFrame implements ActionListener {
         });
     }
 
+    //EFFECTS: Creates a button to display image
+    public void motivationButton() {
+        motivationButton = new JButton("Get some Motivation");
+        motivationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                start.dispose();
+                photo();
+            }
+        });
+    }
+
+    //EFFECTS: Creates a button panel to see schedule
     public void seeSchedButton() {
         seeScheduleButton = new JButton("See Schedule");
         seeScheduleButton.addActionListener(new ActionListener() {
@@ -201,6 +223,8 @@ public class SchedulePanel extends JFrame implements ActionListener {
         });
     }
 
+    // MODIFIES: this
+    //EFFECTS: Creates a button to set a new time goal
     public void setTimeButton() {
         setTimeButton = new JButton("Set Time");
         setTimeButton.addActionListener(new ActionListener() {
@@ -212,6 +236,8 @@ public class SchedulePanel extends JFrame implements ActionListener {
         });
     }
 
+    // MODIFIES: this
+    //EFFECTS: Creates a button to set a new target calories goal
     public void setTargetButton() {
         setTargetButton = new JButton("Set new Target");
         setTargetButton.addActionListener(new ActionListener() {
@@ -223,6 +249,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         });
     }
 
+    //EFFECTS: Creates a button panel to put buttons onto
     public void statsButtonPanel() {
         statsButtonPanel = new JPanel();
         statsButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); 
@@ -231,6 +258,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         statsButtonPanel.add(setTimeButton);
     }
 
+    //EFFECTS: choose frame to choose if user wants to remove or clear exercise
     public void choose() {  
         JFrame chooseFrame = new JFrame();
         chooseFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -257,6 +285,33 @@ public class SchedulePanel extends JFrame implements ActionListener {
 
     }
 
+    //EFFECTS: displays a frame of motivational image
+    public void photo() {
+        JFrame photoFrame = new JFrame();
+        photoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        photoFrame.setSize(700, 700);
+        photoFrame.setLayout(new BorderLayout());
+
+        image = new ImageIcon("data/GymImage.png");
+        Image temp = image.getImage();
+        Image resizedImage = temp.getScaledInstance(400, 396, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(resizedImage);
+
+        JLabel label = new JLabel(resizedIcon);
+
+        JButton returnHome = new JButton("Click Here to Return Home");
+        returnHome.addActionListener(e -> {
+            photoFrame.dispose();
+            startFresh();
+        });
+
+        photoFrame.add(returnHome, BorderLayout.SOUTH);
+        photoFrame.add(label, BorderLayout.CENTER);
+        photoFrame.setVisible(true);
+    }
+
+
+    //EFFECTS: creates a stats bar to display current data
     public JPanel printStatsBar() {
         createLabels();
         targetField = new JTextField(Integer.toString(person.getTargetCalories()), 5);
@@ -286,6 +341,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         return statsPanel;
     }
 
+    //EFFECTS: creates a labels for stats bar
     public void createLabels() {
         target = new JLabel("Target Calories: ");
         target.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -302,6 +358,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
     }
 
     @Override
+    //EFFECTS: overrides action performed
     public void actionPerformed(ActionEvent e) {
         throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
@@ -413,6 +470,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         addExercise.setVisible(true);
     }
 
+    // EFFECTS: helps to finish adding the exercise
     public void addHelper() {
         addExercise = new JFrame("Add a new exercise!");
         addExercise.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -455,6 +513,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         addExerciseStats.setVisible(true);
     }
 
+    // EFFECTS: creates the add exercise statistics frame to collect data
     public void addExerciseStatsFrame() {
         addExerciseStats = new JFrame();
         addExerciseStats.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -462,6 +521,8 @@ public class SchedulePanel extends JFrame implements ActionListener {
         addExerciseStats.setLayout(new FlowLayout());
     }
 
+    //MODIFIES: this
+    // EFFECTS: helps to submit the exercise and instantiate a new exercise
     public void submitButton(JTextField textField, JTextField textField2, 
                             JTextField textField3, JTextField textField4, String day) {
         submit = new JButton("Submit");
@@ -482,6 +543,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         });
     }
 
+    // EFFECTS: frame to show if the workout has been successfully added
     public void result(String r) {
         JFrame result = new JFrame();
         result.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -560,6 +622,8 @@ public class SchedulePanel extends JFrame implements ActionListener {
         
     }
 
+    //MODIFIES: this
+    // EFFECTS: new frame to help clear exercises in a day
     public void clearFrame() {
         clearFrame = new JFrame();
         clearFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -603,6 +667,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         removeFrame.setVisible(true);     
     }
 
+    // EFFECTS: helps to print the current data table
     public void printTable() {
         removeFrame = new JFrame();
         removeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -619,6 +684,8 @@ public class SchedulePanel extends JFrame implements ActionListener {
         display.add(types, BorderLayout.CENTER);
     }
 
+    //MODIFIES: this
+    // EFFECTS: helper function to help finish removing exercises
     public void finishRemoveExercise(String day) {
         finishRemovingStart();
         ArrayList<Exercise> exerciseList = sched.getDay(day).getExercisesForTheDay();
@@ -644,6 +711,8 @@ public class SchedulePanel extends JFrame implements ActionListener {
         removeFrame.setVisible(true);     
     }
 
+    //MODIFIES: this
+    // EFFECTS: helper function to help finish removing exercises
     public void finishRemovingStart() {
         removeFrame = new JFrame();
         removeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -656,12 +725,15 @@ public class SchedulePanel extends JFrame implements ActionListener {
         displayArea.setEditable(false);
     }
 
+    // EFFECTS: creates a Jframe to help remove exercises
     public void updateRemoving() {
         display.setLayout(new BorderLayout());
         display.add(enterJLabel, BorderLayout.NORTH);
         display.add(displayArea, BorderLayout.CENTER);
     }
 
+    //MODIFIES: this
+    // EFFECTS: helper function submit removing
     public void removeButton(JTextField textField, String day) {
         removeButton.addActionListener(e -> {
             String name = textField.getText();
@@ -689,6 +761,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         for (int i = 0; i < 7; i++) {
             tableData[0][i] = types.get(i); 
         }
+
         for (int i = 0; i < maxExercises; i++) {
             for (int j = 0; j < 7; j++) {
                 if (i < exercises.get(j).size()) {
@@ -704,12 +777,14 @@ public class SchedulePanel extends JFrame implements ActionListener {
        
     }
 
+    // EFFECTS: creates a new table Frame
     public void setNewTable() {
         tableFrame = new JFrame(person.getName() + "'s Weekly Schedule");
         tableFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         tableFrame.setSize(800, 500);
     }
 
+    // EFFECTS: adds all components to table
     public void finishNewTable() {
         tableFrame.setLayout(new BorderLayout());
         tableFrame.add(printStatsBar(), BorderLayout.NORTH);
@@ -718,6 +793,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
         tableFrame.setVisible(true);
     }
 
+    // EFFECTS: creates JButton to return home
     public void returnButton() {
         returnHome = new JButton("Click Here to Return Home");
         returnHome.addActionListener(e -> {

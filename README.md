@@ -29,6 +29,6 @@ The target audience is adults and young adults who put off going to the gym. If 
 
 - You can generate the first required action related to the user story "adding multiple Xs to a Y" by pressing Actions in the top left corner then clicking "add an exercise", after that you can follow the instructions to add an exercise to the weekly planner. If you want to add multiple, keep repeating this process. 
 - You can generate the second required action related to the user story "adding multiple Xs to a Y" by pressing "add type day" in the Actions menu. This delegates a specific type (leg or arm) to a day so the code will add leg exercise types or arm exercise tyeps accordingly. You can see the set days when you press "see current schedule".
-- You can locate my visual component by...
+- You can locate my visual component by clicking the button "Get some motivation" at the bottom of the screen after you've clicked load or start new. 
 - You can save the state of my application by pressing the "Save to File" button at the bottom of the user screen.
 - You can reload the state of my application by pressing "Load from file" at the very beginning of the program. After you saved it, you can rerun the program and click this button again for updated changes.
