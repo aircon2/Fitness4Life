@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -14,6 +16,8 @@ import model.Exercise;
 import model.LegExercise;
 import model.Person;
 import model.WeeklySchedule;
+import model.Event;
+import model.EventLog;
 
 // GUI design, displays options and takes in user actions
 public class SchedulePanel extends JFrame implements ActionListener {
@@ -140,15 +144,26 @@ public class SchedulePanel extends JFrame implements ActionListener {
         actions.add(removeExerciseItem);
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); 
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.add(saveButton);
         buttonPanel.add(motivationButton);
+        
        
         start.setJMenuBar(menuBar);
         start.add(label, BorderLayout.CENTER);
         start.add(buttonPanel, BorderLayout.SOUTH);
         start.add(printStatsBar(), BorderLayout.NORTH);
         start.add(statsButtonPanel);
+        start.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.out.println("Event log: ");
+                for(Event event : EventLog.getInstance()) {
+                    System.out.println(event.getDescription());
+                }
+                System.out.println("End Event log: ");
+            }
+        });
         start.setVisible(true);
     }
 
@@ -198,6 +213,7 @@ public class SchedulePanel extends JFrame implements ActionListener {
             }
         });
     }
+
 
     //EFFECTS: Creates a button to display image
     public void motivationButton() {

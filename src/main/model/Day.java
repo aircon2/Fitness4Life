@@ -20,6 +20,7 @@ public class Day {
     // MODIFIES: this
     // EFFECTS: add an exercise to daily workout plan
     public void addExercise(Exercise e) {
+        EventLog.getInstance().logEvent(new Event("Exercise added to " + getName()));
         day.add(e);
     }
 

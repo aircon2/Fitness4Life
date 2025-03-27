@@ -69,6 +69,7 @@ public class WeeklySchedule implements Writable {
             if (d.getName().equals(day)) { 
                 if (type.equals("leg") || type.equals("arm")) {
                     d.setType(type);
+                    EventLog.getInstance().logEvent(new Event("Set type of day:  " + type + " for " + day));
                     break;
                 } 
             
@@ -145,6 +146,8 @@ public class WeeklySchedule implements Writable {
                         int cals = exercises.get(i).getCaloriesBurned() * exercises.get(i).getReps();
                         int time = exercises.get(i).getTimeForExercise() * exercises.get(i).getReps();
                         exercises.remove(i);
+                        EventLog.getInstance().logEvent(new Event("Removed exercise from schedule, exercise name was  " 
+                                                                  + name));
                         returns.add(cals);
                         returns.add(time);
                         return returns;  
@@ -173,6 +176,7 @@ public class WeeklySchedule implements Writable {
                 d.cheatDay();
                 returns.add(caloriesWorth);
                 returns.add(timeWorth);
+                EventLog.getInstance().logEvent(new Event("Cleared exercise from schedule, the day was  " + d));
                 return returns;
             }
         } 

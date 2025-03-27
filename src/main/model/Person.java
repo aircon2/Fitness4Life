@@ -32,6 +32,7 @@ public class Person implements Writable {
     // EFFECTS: set time each person will workout for per day
     public void setTime(int time) {
         this.time = time;
+        EventLog.getInstance().logEvent(new Event("Time set to " +  this.time));
     }
 
     // REQUIRES: calories >= 0
@@ -39,6 +40,7 @@ public class Person implements Writable {
     // EFFECTS: Set the calories target for the person
     public void setTargetCalories(int calories) {
         this.targetCalories = calories;
+        EventLog.getInstance().logEvent(new Event("Target set to " +  this.targetCalories));
     }
 
     // REQUIRES: calories >= 0
@@ -46,6 +48,8 @@ public class Person implements Writable {
     // EFFECTS: Add to the calories target for the person
     public void addTargetCalories(int calories) {
         targetCalories += calories;
+        EventLog.getInstance().logEvent(new Event("Updated target calories for the week, target is now:  " 
+                                                  + targetCalories));
     }
 
     // REQUIRES: calories >= 0
@@ -53,6 +57,8 @@ public class Person implements Writable {
     // EFFECTS: Add to the curernt calories for the person
     public void addCurrentCalories(int calories) {
         currentCalories += calories;
+        EventLog.getInstance().logEvent(new Event("Updated current calories for the week, current is now:  " 
+                                                  + currentCalories));
     }
 
     // REQUIRES: calories >= 0

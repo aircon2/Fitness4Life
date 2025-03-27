@@ -32,3 +32,21 @@ The target audience is adults and young adults who put off going to the gym. If 
 - You can locate my visual component by clicking the button "Get some motivation" at the bottom of the screen after you've clicked load or start new. 
 - You can save the state of my application by pressing the "Save to File" button at the bottom of the user screen.
 - You can reload the state of my application by pressing "Load from file" at the very beginning of the program. After you saved it, you can rerun the program and click this button again for updated changes.
+
+# Phase 4: Task 2
+Event log: 
+Target set to 1000
+Time set to 1000
+Set type of day:  leg for monday
+Set type of day:  leg for friday
+Exercise added to monday
+Time set to 999
+Updated current calories for the week, current is now:  1
+Exercise added to friday
+Time set to 998
+Updated current calories for the week, current is now:  2
+Removed exercise from schedule, exercise name was  jenwe
+Time set to 999
+Cleared exercise from schedule, the day was  model.Day@5ac6289f
+Time set to 1000
+End Event log: 
