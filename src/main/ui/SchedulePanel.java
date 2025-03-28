@@ -154,16 +154,6 @@ public class SchedulePanel extends JFrame implements ActionListener {
         start.add(buttonPanel, BorderLayout.SOUTH);
         start.add(printStatsBar(), BorderLayout.NORTH);
         start.add(statsButtonPanel);
-        start.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.out.println("Event log: ");
-                for(Event event : EventLog.getInstance()) {
-                    System.out.println(event.getDescription());
-                }
-                System.out.println("End Event log: ");
-            }
-        });
         start.setVisible(true);
     }
 
@@ -200,6 +190,16 @@ public class SchedulePanel extends JFrame implements ActionListener {
         start.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         start.setSize(800, 800);
         start.setLayout(new BorderLayout());
+        start.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.out.println("Event log: ");
+                for (Event event : EventLog.getInstance()) {
+                    System.out.println(event.getDescription());
+                }
+                System.out.println("End Event log: ");
+            }
+        });
     }
 
     //EFFECTS: saves current data to JSON 

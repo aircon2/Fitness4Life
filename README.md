@@ -50,3 +50,6 @@ Time set to 999
 Cleared exercise from schedule, the day was  model.Day@5ac6289f
 Time set to 1000
 End Event log: 
+
+# Phase 4: Task 3
+If i had more time to work on this project I would add more features to confirm user actions. Such as, after each adding or removing I would add a screen to confirm what has been done. Additionally, before each action I would print a window with the current schedule next to the current panel so users can immediately refer to it. This is all used to increase user experience so it is a more smooth and enjoyable UI that people would willingly use. Additionally, I would change the way users add type days and exercises, currently, without a type day, users cannot add exercises but I want to make the type of day optional and not simply "leg" or "arm" because there are many other body parts that need to be exercised as well. I would make it user friendly so people can customize the day names. 
